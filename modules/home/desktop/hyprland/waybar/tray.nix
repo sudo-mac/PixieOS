@@ -1,0 +1,12 @@
+{
+  programs.waybar = {
+    settings.mainBar.tray = {
+      icon-size = 21;
+      spacing = 10;
+      icons = {
+        blueman = "bluetooth";
+        TelegramDesktop = "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png";
+      };
+    };
+  };
+}
