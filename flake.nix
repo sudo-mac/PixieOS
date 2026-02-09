@@ -1,4 +1,5 @@
 {
+  ##TEST
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # nixpkgs.url = "github:NixOS/nixpkgs?ref=master";
