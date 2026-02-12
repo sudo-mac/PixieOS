@@ -75,19 +75,19 @@
     ...
   } @ inputs: {
     nixosConfigurations = {
-      alienix = nixpkgs.lib.nixosSystem {
+      default = nixpkgs.lib.nixosSystem {
         system = "x86-linux";
 
         specialArgs = {inherit inputs;};
 
         modules = [
-          ./hosts/alienix/system
+          ./hosts/desktop/system
           ./modules/nixos/system
 
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
-
           nix-flatpak.nixosModules.nix-flatpak
+
           {
             home-manager = {
               useUserPackages = true;
@@ -100,7 +100,7 @@
 
               extraSpecialArgs = {inherit inputs;};
               users.dex.imports = [
-                ./hosts/alienix/home
+                ./hosts/desktop/home
                 ./modules/shared/home
               ];
             };

@@ -28,7 +28,7 @@
           enable = true;
           providers = {
             xclip.enable = true;
-            # wl-copy.enable = true;
+            wl-copy.enable = true;
           };
         };
 
@@ -75,7 +75,6 @@
           nix = {
             enable = true;
             lsp.enable = true;
-            lsp.servers = ["nixd"];
             treesitter.enable = true;
             format.enable = true;
           };
