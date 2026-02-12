@@ -1,12 +1,18 @@
 {
   imports = [
-    ./home.nix
     ../home/desktop/hyprland/config.nix
-    ./plasma.nix
-    ./mimeapps.nix
-    ./firefox.nix
     ./discord.nix
-    ./packages.nix
+    ./git.nix
+    ./kitty.nix
+    ./neovim.nix
+    ./plasma.nix
     ./vscodium.nix
+    ./desktop
+    ./firefox.nix
+    ./home.nix
+    ./mimeapps.nix
+    ./packages.nix
+    ./starship.nix
+    ./zsh.nix
   ];
 }

@@ -1,0 +1,26 @@
+{
+  imports = [
+    ./config.nix
+    ./users.nix
+    ./packages.nix
+    ./displaymanager.nix
+    ./nvidia.nix
+    ./ssh.nix
+    ./stylix.nix
+    ./time-and-date.nix
+    ./audio.nix
+    ./vpn.nix
+    ./graphics.nix
+    ./gaming.nix
+    ./minecraft
+    ./roblox.nix
+    ./asus.nix
+    ./bootloader.nix
+    ./plasma.nix
+    ./virtualisation.nix
+    ../home/desktop/hyprland/hypr.nix
+    ./gnome.nix
+    ./libreoffice.nix
+    ./qflipper.nix
+  ];
+}

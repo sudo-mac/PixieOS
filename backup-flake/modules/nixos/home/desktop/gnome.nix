@@ -1,10 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-with lib; {
+{ config, lib, pkgs, ... }: with lib; {
+
   options = {
     gnomehome.enable =
       mkEnableOption "Enable Gnome Home-Manager configuration";
@@ -25,5 +20,4 @@ with lib; {
       gnomeExtensions.dash-to-dock
       gnomeExtensions.blur-my-shell
     ];
-  };
-}
+  }

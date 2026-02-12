@@ -1,15 +1,16 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib; {
-  options = { alienix.system.ssh.enable = mkEnableOption "Enables SSH"; };
+  options = {alienix.system.ssh.enable = mkEnableOption "Enables SSH";};
 
   config = mkIf config.alienix.system.ssh.enable {
     services.openssh = {
       enable = true;
-      ports = [ 44906 ];
+      ports = [44906];
       settings = {
         PasswordAuthentication = false;
         UseDns = true;
@@ -24,12 +25,12 @@ with lib; {
       extraConfig = ''
         Host github.com
           User git
-          IdentityFile ~/.ssh/GitHub
+          IdentityFile ~/.ssh/homelab
           IdentitiesOnly yes
 
         Host gitlab.com
           User git
-          IdentityFile ~/.ssh/GitHub
+          IdentityFile ~/.ssh/homelab
           IdentitiesOnly yes
 
         Host alienix

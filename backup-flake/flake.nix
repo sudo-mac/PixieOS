@@ -83,11 +83,12 @@
         modules = [
           ./hosts/alienix/system
           ./modules/nixos/system
+          ./modules/shared/system
 
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
-
           nix-flatpak.nixosModules.nix-flatpak
+
           {
             home-manager = {
               useUserPackages = true;
@@ -108,18 +109,18 @@
         ];
       };
 
-      laptop = nixpkgs.lib.nixosSystem {
+      drone = nixpkgs.lib.nixosSystem {
         system = "x86-linux";
 
         specialArgs = {inherit inputs;};
 
         modules = [
-          ./hosts/laptop/system
+          ./hosts/drone/system
           ./modules/nixos/system
+          ./modules/shared/system
 
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
-          nix-flatpak.nixosModules.nix-flatpak
 
           {
             home-manager = {
@@ -133,7 +134,7 @@
 
               extraSpecialArgs = {inherit inputs;};
               users.dex.imports = [
-                ./hosts/laptop/home
+                ./hosts/drone/home
                 ./modules/shared/home
               ];
             };
@@ -141,14 +142,15 @@
         ];
       };
 
-      wsl = nixpkgs.lib.nixosSystem {
+      windrone = nixpkgs.lib.nixosSystem {
         system = "x86-linux";
 
         specialArgs = {inherit inputs;};
 
         modules = [
-          ./hosts/wsl/system
+          ./hosts/windrone/system
           ./modules/nixos/system
+          ./modules/shared/system
 
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
@@ -165,7 +167,8 @@
 
               extraSpecialArgs = {inherit inputs;};
               users.dex.imports = [
-                ./hosts/laptop/home
+                ./hosts/drone/home
+                ./modules/shared/home
               ];
             };
           }
@@ -182,6 +185,7 @@
       system = "aarch64-darwin";
       modules = [
         ./hosts/darwin/system
+        ./modules/shared/system
 
         home-manager.darwinModules.home-manager
         stylix.darwinModules.stylix
@@ -208,6 +212,7 @@
             extraSpecialArgs = {inherit inputs;};
             users.matthew.imports = [
               ./hosts/darwin/home
+              ./modules/shared/home
             ];
           };
         }
