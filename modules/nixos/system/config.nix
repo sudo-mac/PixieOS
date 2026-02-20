@@ -1,8 +1,12 @@
-{ inputs, config, pkgs, lib, ... }:
-
 {
+  inputs,
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Enabling Flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -14,7 +18,7 @@
   services.usbmuxd.enable = true;
 
   # Enable networking
-  networking.networkmanager = { enable = true; };
+  networking.networkmanager = {enable = true;};
 
   # Enable Bluetooth
   services.blueman.enable = true;
@@ -41,13 +45,6 @@
 
   services.gnome.gcr-ssh-agent.enable = false;
 
-  # Exclude unneccessary Plasma packages
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    konsole
-    oxygen
-    kate
-  ];
-
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
     HandleLidSwitchDocked = "ignore";
@@ -60,7 +57,7 @@
     inputs.iio-hyprland.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
-  boot.kernelModules = [ "usbnet" "cdc_ether" ];
+  boot.kernelModules = ["usbnet" "cdc_ether"];
 
   # NixOS Version
   system.stateVersion = "25.11"; # Did you read the comment?

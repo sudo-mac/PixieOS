@@ -6,6 +6,4 @@
     shell.enable = true;
     git.enable = true;
   };
-
-  plasmahome.enable = true;
 }

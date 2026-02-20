@@ -13,14 +13,8 @@
 
       minecraft = {
         enable = true;
-        servers.fabric-1_21_1.enable = true;
+        servers.fabric-1_21_1.enable = false;
       };
     };
   };
-
-  # Enable Gnome System-Level Configuration
-  gnomesys.enable = true;
-
-  # Enable Plasma6 System-Level Configuration
-  plasmasys.enable = true;
 }

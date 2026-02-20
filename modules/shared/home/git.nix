@@ -12,13 +12,15 @@ with lib; {
     programs.git = {
       enable = true;
       settings = {
-        user.name = "PaperMushrooms";
-        user.email = "PaperMushrooms@users.noreply.github.com";
+        user.name = "sudo-mac";
+        user.email = "sudo-mac@users.noreply.github.com";
         init.defaultBranch = "main";
       };
     };
 
     home.packages = [
+      pkgs.github-desktop
+
       (pkgs.writeShellScriptBin "commit" ''
         read -r -p "Enter commit message: " message
 

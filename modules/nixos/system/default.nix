@@ -16,10 +16,8 @@
     ./roblox.nix
     ./asus.nix
     ./bootloader.nix
-    ./plasma.nix
     ./virtualisation.nix
     ../home/desktop/hyprland/hypr.nix
-    ./gnome.nix
     ./libreoffice.nix
     ./qflipper.nix
   ];
