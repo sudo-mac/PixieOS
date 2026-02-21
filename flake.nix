@@ -61,7 +61,6 @@
         modules = [
           ./hosts/alienix/system
           ./modules/nixos/system
-          ./modules/shared/system
 
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix

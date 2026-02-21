@@ -20,5 +20,6 @@
     ../home/desktop/hyprland/hypr.nix
     ./libreoffice.nix
     ./qflipper.nix
+    ./tmux.nix
   ];
 }
