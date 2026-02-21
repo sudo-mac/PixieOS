@@ -28,7 +28,7 @@
       base0F = "ff6fd8";
     };
 
-    image = ../../../wallpapers/anime/cybergirl.jpg;
+    image = ../../wallpapers/anime/cybergirl.jpg;
   };
   home-manager.users.dex.config.stylix.targets = {
     kde.enable = false;

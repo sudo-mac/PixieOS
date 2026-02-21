@@ -1,7 +1,13 @@
-{ inputs, config, pkgs, lib, ... }: {
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./home-options.nix
-    ../../../modules/nixos/home
+    ../../../modules/home
   ];
 
   home.username = "dex";

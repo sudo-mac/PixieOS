@@ -60,7 +60,7 @@
 
         modules = [
           ./hosts/alienix/system
-          ./modules/nixos/system
+          ./modules/system
 
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
