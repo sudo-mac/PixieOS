@@ -79,7 +79,6 @@
               extraSpecialArgs = {inherit inputs;};
               users.dex.imports = [
                 ./hosts/alienix/home
-                ./modules/shared/home
               ];
             };
           }

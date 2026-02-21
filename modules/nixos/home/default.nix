@@ -7,5 +7,10 @@
     ./discord.nix
     ./packages.nix
     ./vscodium.nix
+    ./git.nix
+    ./neovim.nix
+    ./kitty.nix
+    ./zsh.nix
+    ./starship.nix
   ];
 }
