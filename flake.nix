@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -10,7 +11,16 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    nix-on-droid.url = "github:nix-community/nix-on-droid/release-24.05";
+
+    nixpkgs-droid = {
+      url = "github:nixos/nixpkgs/88d3861";
+    };
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
     nixcord.url = "github:kaylorben/nixcord";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
@@ -93,11 +103,11 @@
       ];
     };
 
-    nixOnDroidConfigurations.nix-on-droid = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs {system = "aarch64-linux";};
       modules = [
         ./hosts/nix-on-droid/nix-on-droid.nix
-        stylix.nixOnDroidModules.stylix
+        # stylix.nixOnDroidModules.stylix
       ];
     };
   };
