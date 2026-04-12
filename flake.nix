@@ -1,26 +1,22 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    stylix.url = "github:danth/stylix";
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-utils.url = "github:numtide/flake-utils";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
     hyprland.url = "github:hyprwm/Hyprland";
     iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
-    nixcord.url = "github:kaylorben/nixcord";
-    nixcord.inputs.nixpkgs.follows = "nixpkgs";
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-on-droid.url = "github:nix-community/nix-on-droid/release-24.05";
+    nixcord.inputs.nixpkgs.follows = "nixpkgs";
+    nixcord.url = "github:kaylorben/nixcord";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
+    nvf.url = "github:notashelf/nvf";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {

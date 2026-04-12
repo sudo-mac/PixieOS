@@ -8,6 +8,7 @@
     nh
     nix-output-monitor
     bat
+    btop
     tree
     weathr
     lolcat
