@@ -42,10 +42,10 @@ with lib; {
                   url = "https://www.ebay.com/";
                 }
                 {
-                  name = "ChatGPT";
+                  name = "Claude";
                   tags = ["Artificial Intelligence"];
                   keyword = "GPT";
-                  url = "https://chatgpt.com/";
+                  url = "https://claude.ai/";
                 }
                 {
                   name = "GitHub";
@@ -75,10 +75,10 @@ with lib; {
                       url = "https://www.ebay.com/";
                     }
                     {
-                      name = "ChatGPT";
+                      name = "Claude";
                       tags = ["Artificial Intelligence"];
                       keyword = "GPT";
-                      url = "https://chatgpt.com/";
+                      url = "https://claude.ai/";
                     }
                     {
                       name = "GitHub";
