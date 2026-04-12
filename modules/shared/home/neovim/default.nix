@@ -60,4 +60,5 @@
       };
     };
   };
+  home.sessionVariables = {EDITOR = "nvim";};
 }
