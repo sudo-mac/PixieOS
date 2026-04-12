@@ -27,6 +27,11 @@
         base0E = "b388ff";
         base0F = "ff6fd8";
       };
+
+      # targets = {
+      #   nvf.enable = true;
+      #   librewolf.profileNames = ["default"];
+      # };
     }
     // lib.optionalAttrs config.nixpkgs.hostPlatform.isLinux {
       image = ../../../wallpapers/anime/cybergirl.jpg;
@@ -41,13 +46,11 @@
       };
 
       targets = {
-        nvf.enable = true;
         kde.enable = false;
         kde.decorations.enable = false;
         gtk.enable = false;
         qt.enable = false;
         rofi.enable = true;
-        librewolf.profileNames = ["default"];
       };
     };
   };
