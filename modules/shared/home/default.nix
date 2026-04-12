@@ -1,7 +1,8 @@
 {
   imports = [
+    ./firefox.nix
     ./git.nix
-    ./shell
     ./neovim
+    ./shell
   ];
 }
