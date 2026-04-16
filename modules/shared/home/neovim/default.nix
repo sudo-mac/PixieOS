@@ -1,8 +1,4 @@
 {
-  pkgs,
-  lib,
-  ...
-}: {
   imports = [
     ./ui.nix
     ./lsp.nix

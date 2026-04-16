@@ -30,6 +30,7 @@
           lsp.servers = ["nixd"];
           treesitter.enable = true;
           format.enable = true;
+          format.type = ["nixfmt"];
         };
 
         clang = {
