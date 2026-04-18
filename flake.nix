@@ -16,11 +16,6 @@
       url = "github:nixos/nixpkgs/88d3861";
     };
 
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
     nixcord.url = "github:kaylorben/nixcord";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
@@ -41,7 +36,6 @@
       nvf,
       stylix,
       nix-darwin,
-      nix-on-droid,
       ...
     }@inputs:
     {
@@ -102,14 +96,6 @@
               ];
             };
           }
-        ];
-      };
-
-      nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
-        pkgs = import nixpkgs { system = "aarch64-linux"; };
-        modules = [
-          ./hosts/nix-on-droid/nix-on-droid.nix
-          # stylix.nixOnDroidModules.stylix
         ];
       };
     };
