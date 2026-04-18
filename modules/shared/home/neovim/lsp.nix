@@ -6,10 +6,9 @@
   programs.nvf.settings.vim = {
     lsp = {
       enable = true;
+      presets.harper.enable = true;
       formatOnSave = true;
       otter-nvim.enable = true;
-      harper-ls.enable = true;
-      # servers.nixd.settings.nil.nix.autoArchive = false;
     };
 
     languages =
