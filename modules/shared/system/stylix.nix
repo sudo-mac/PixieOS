@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+with lib; {
   stylix =
     {
       enable = true;
@@ -27,17 +28,12 @@
         base0E = "b388ff";
         base0F = "ff6fd8";
       };
-
-      # targets = {
-      #   nvf.enable = true;
-      #   librewolf.profileNames = ["default"];
-      # };
     }
-    // lib.optionalAttrs config.nixpkgs.hostPlatform.isLinux {
+    // optionalAttrs config.nixpkgs.hostPlatform.isLinux {
       image = ../../../wallpapers/anime/cybergirl.jpg;
     };
 
-  home-manager = lib.optionalAttrs config.nixpkgs.hostPlatform.isLinux {
+  home-manager = optionalAttrs config.nixpkgs.hostPlatform.isLinux {
     users.dex.config.stylix = {
       cursor = {
         package = pkgs.bibata-cursors;
