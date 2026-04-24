@@ -1,23 +1,22 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
+    homebrew-cask.flake = false;
+    homebrew-cask.url = "github:homebrew/homebrew-cask";
+    homebrew-core.flake = false;
+    homebrew-core.url = "github:homebrew/homebrew-core";
     hyprland.url = "github:hyprwm/Hyprland";
     iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-
-    nixpkgs-droid = {
-      url = "github:nixos/nixpkgs/88d3861";
-    };
-
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
     nixcord.url = "github:kaylorben/nixcord";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
     nvf.url = "github:notashelf/nvf";
     rust-overlay.url = "github:oxalica/rust-overlay";
@@ -28,14 +27,17 @@
     {
       self,
       home-manager,
+      homebrew-cask,
+      homebrew-core,
       hyprland,
+      nix-darwin,
       nix-flatpak,
+      nix-homebrew,
       nix-minecraft,
       nixcord,
       nixpkgs,
       nvf,
       stylix,
-      nix-darwin,
       ...
     }@inputs:
     {
@@ -81,6 +83,7 @@
           ./modules/shared/system
           stylix.darwinModules.stylix
           home-manager.darwinModules.home-manager
+          nix-homebrew.darwinModules.nix-homebrew
           {
             home-manager = {
               useUserPackages = true;
@@ -94,6 +97,17 @@
                 ./hosts/darwin/home
                 ./modules/shared/home
               ];
+            };
+
+            nix-homebrew = {
+              enable = true;
+              user = "mac";
+              autoMigrate = true;
+
+              taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+              };
             };
           }
         ];
