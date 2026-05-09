@@ -68,7 +68,7 @@
         format.enable = true;
       };
 
-      ts = {
+      typescript = {
         enable = true;
         lsp.enable = true;
         treesitter.enable = true;

@@ -2,10 +2,14 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
-with lib; {
-  options = {alienix.home.firefox.enable = mkEnableOption "Enable and Configure Firefox";};
+with lib;
+{
+  options = {
+    alienix.home.firefox.enable = mkEnableOption "Enable and Configure Firefox";
+  };
 
   config = mkMerge [
     (mkIf config.alienix.home.firefox.enable {
@@ -13,6 +17,7 @@ with lib; {
         enable = true;
         profiles = {
           default = {
+            isDefault = true;
             name = "default";
             settings = {
               "browser.theme.content-theme" = 1;
@@ -25,31 +30,31 @@ with lib; {
               settings = [
                 {
                   name = "Gmail";
-                  tags = ["Email"];
+                  tags = [ "Email" ];
                   keyword = "gmail";
                   url = "https://mail.google.com/";
                 }
                 {
                   name = "Google Drive";
-                  tags = ["Cloud"];
+                  tags = [ "Cloud" ];
                   keyword = "drive";
                   url = "https://drive.google.com/";
                 }
                 {
                   name = "Ebay";
-                  tags = ["Shopping"];
+                  tags = [ "Shopping" ];
                   keyword = "drive";
                   url = "https://www.ebay.com/";
                 }
                 {
                   name = "Claude";
-                  tags = ["Artificial Intelligence"];
+                  tags = [ "Artificial Intelligence" ];
                   keyword = "GPT";
                   url = "https://claude.ai/";
                 }
                 {
                   name = "GitHub";
-                  tags = ["Development"];
+                  tags = [ "Development" ];
                   keyword = "Git";
                   url = "https://github.com/";
                 }
@@ -58,31 +63,31 @@ with lib; {
                   bookmarks = [
                     {
                       name = "Gmail";
-                      tags = ["Email"];
+                      tags = [ "Email" ];
                       keyword = "gmail";
                       url = "https://mail.google.com/";
                     }
                     {
                       name = "Google Drive";
-                      tags = ["Cloud"];
+                      tags = [ "Cloud" ];
                       keyword = "drive";
                       url = "https://drive.google.com/";
                     }
                     {
                       name = "Ebay";
-                      tags = ["Shopping"];
+                      tags = [ "Shopping" ];
                       keyword = "drive";
                       url = "https://www.ebay.com/";
                     }
                     {
                       name = "Claude";
-                      tags = ["Artificial Intelligence"];
+                      tags = [ "Artificial Intelligence" ];
                       keyword = "GPT";
                       url = "https://claude.ai/";
                     }
                     {
                       name = "GitHub";
-                      tags = ["Development"];
+                      tags = [ "Development" ];
                       keyword = "Git";
                       url = "https://github.com/";
                     }
@@ -90,22 +95,26 @@ with lib; {
                 }
               ];
             };
+            extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
+              sponsorblock
+            ];
           };
         };
       };
+      stylix.targets.librewolf.profileNames = [ "default" ];
     })
 
     (mkIf (config.alienix.home.firefox.enable && pkgs.stdenv.isLinux) {
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {
-          "text/html" = ["firefox.desktop"];
-          "application/xhtml+xml" = ["firefox.desktop"];
-          "application/x-www-browser" = ["firefox.desktop"];
-          "x-scheme-handler/http" = ["firefox.desktop"];
-          "x-scheme-handler/https" = ["firefox.desktop"];
-          "x-scheme-handler/about" = ["firefox.desktop"];
-          "x-scheme-handler/unknown" = ["firefox.desktop"];
+          "text/html" = [ "firefox.desktop" ];
+          "application/xhtml+xml" = [ "firefox.desktop" ];
+          "application/x-www-browser" = [ "firefox.desktop" ];
+          "x-scheme-handler/http" = [ "firefox.desktop" ];
+          "x-scheme-handler/https" = [ "firefox.desktop" ];
+          "x-scheme-handler/about" = [ "firefox.desktop" ];
+          "x-scheme-handler/unknown" = [ "firefox.desktop" ];
         };
       };
     })

@@ -1,5 +1,7 @@
 {
   inputs = {
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -26,6 +28,7 @@
   outputs =
     {
       self,
+      firefox-addons,
       home-manager,
       homebrew-cask,
       homebrew-core,
