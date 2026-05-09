@@ -112,7 +112,6 @@
     polychromatic
     razer-cli
     ripgrep
-    rustdesk-flutter
     scrcpy
     slurp
     superfile
