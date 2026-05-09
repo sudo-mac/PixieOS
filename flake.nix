@@ -80,6 +80,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/darwin/system
+          ./modules/darwin/system
           ./modules/shared/system
           stylix.darwinModules.stylix
           home-manager.darwinModules.home-manager
