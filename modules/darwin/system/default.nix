@@ -11,6 +11,12 @@
       AppleIconAppearanceTheme = "RegularDark";
     };
 
+    finder = {
+      NewWindowTarget = "Home";
+      ShowPathbar = true;
+      QuitMenuItem = true;
+    };
+
     controlcenter.BatteryShowPercentage = true;
   };
 }
