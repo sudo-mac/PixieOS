@@ -4,11 +4,15 @@
   ];
 
   users.users.mac.home = "/Users/mac";
-  system.primaryUser = "mac";
-  system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
-  nix.settings.experimental-features = "nix-command flakes";
-  system.stateVersion = 6;
+  homebrew.enable = true;
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  homebrew.enable = true;
+  system = {
+    primaryUser = "mac";
+    defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
+    stateVersion = 6;
+  };
+
+  security.pam.services.sudo_local.touchIdAuth = true;
+  nix.settings.experimental-features = "nix-command flakes";
 }
