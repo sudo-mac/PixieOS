@@ -10,6 +10,7 @@
   system = {
     primaryUser = "mac";
     defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
+    defaults.NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
     stateVersion = 6;
   };
 
