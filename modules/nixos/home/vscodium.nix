@@ -1,12 +1,19 @@
-{ config, lib, pkgs, ... }:
-with lib; {
-  options = { alienix.home.vscodium.enable = mkEnableOption "enables VSCodium"; };
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+{
+  options = {
+    alienix.home.vscodium.enable = mkEnableOption "enables VSCodium";
+  };
 
   config = mkIf config.alienix.home.vscodium.enable {
     # Configure VScodium
-    programs.vscode = {
+    programs.vscodium = {
       enable = true;
-      package = pkgs.vscodium;
       profiles = {
         default = {
           extensions = with pkgs.vscode-extensions; [

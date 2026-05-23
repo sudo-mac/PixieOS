@@ -6,7 +6,7 @@
 {
   imports = [
     ./users.nix
-    ./bitwarden.nix
+    # ./bitwarden.nix
     ./nvidia.nix
     ./time-and-date.nix
     ./audio.nix

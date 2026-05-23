@@ -26,6 +26,8 @@
       l = "ls -l --color=always";
       ll = "ls -la --color=always";
       tree = "tree -C";
+      ds0 = "sudo pmset disablesleep 0";
+      ds1 = "sudo pmset disablesleep 1";
     };
   };
 }

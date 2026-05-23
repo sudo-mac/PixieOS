@@ -22,7 +22,7 @@
     nvf.inputs.nixpkgs.follows = "nixpkgs";
     nvf.url = "github:notashelf/nvf";
     rust-overlay.url = "github:oxalica/rust-overlay";
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:nix-community/stylix/pull/2337/head";
   };
 
   outputs =
