@@ -9,6 +9,7 @@
     # ./bitwarden.nix
     ./nvidia.nix
     ./time-and-date.nix
+    ./nextcloud.nix
     ./audio.nix
     ./graphics.nix
     ./gaming.nix
