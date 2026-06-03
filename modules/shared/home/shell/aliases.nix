@@ -16,6 +16,8 @@
 
       mkdir = "mkdir -p";
       cp = "cp -r";
+
+      pogo = "nix develop github:sudo-mac/nix-dev-shells#pogo";
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
       switch = "nh darwin switch .#darwin";
