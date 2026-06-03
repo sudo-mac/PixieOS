@@ -8,5 +8,6 @@
     "discord"
     "rustdesk"
     "calibre"
+    "freecad"
   ];
 }
