@@ -18,5 +18,6 @@
     };
 
     controlcenter.BatteryShowPercentage = true;
+
   };
 }

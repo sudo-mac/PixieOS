@@ -1,7 +1,9 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./ssh.nix
     ./stylix.nix
+    ./tmux.nix
   ];
 
   environment.systemPackages = with pkgs; [
