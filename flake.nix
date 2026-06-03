@@ -1,28 +1,49 @@
 {
   inputs = {
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    homebrew-cask.flake = false;
-    homebrew-cask.url = "github:homebrew/homebrew-cask";
-    homebrew-core.flake = false;
-    homebrew-core.url = "github:homebrew/homebrew-core";
     hyprland.url = "github:hyprwm/Hyprland";
     iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    nixcord.inputs.nixpkgs.follows = "nixpkgs";
-    nixcord.url = "github:kaylorben/nixcord";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nvf.inputs.nixpkgs.follows = "nixpkgs";
-    nvf.url = "github:notashelf/nvf";
     rust-overlay.url = "github:oxalica/rust-overlay";
     stylix.url = "github:nix-community/stylix/pull/2337/head";
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixcord = {
+      nixcord.url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
