@@ -21,8 +21,10 @@
     ./libreoffice.nix
     ./qflipper.nix
     ./tmux.nix
-    ./yazi.nix
     ./screen.nix
+    ./yazi.nix
+    ./rustdesk.nix
+    ./rustdesk-secrets.nix
     ./pokemmo.nix
   ];
 

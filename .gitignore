@@ -1,3 +1,4 @@
 .gitignore
 flake.lock.bak
 result
+./modules/nixos/system/rustdesk-secrets.nix
