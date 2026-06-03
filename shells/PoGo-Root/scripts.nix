@@ -1,4 +1,5 @@
-{ pkgs }: [
+{ pkgs }:
+[
   (pkgs.writeShellScriptBin "McLaren-crDroid7-A11" ''
     cd McLaren/crDroid7-A11/
     bash install.sh
@@ -30,27 +31,7 @@
   '')
 
   (pkgs.writeShellScriptBin "OnePlus7T-crDroid9-A13" ''
-    cd OnePlus7T/crDroid9-A13
-    fastboot flash dtbo dtbo.img
-    fastboot flash vbmeta vbmeta.img
-    fastboot flash recovery_a recovery.img
-    fastboot flash recovery_b recovery.img
-    fastboot reboot recovery
-    echo && read -p "On the device, tap Factory Reset, then Format data / factory reset, and continue.
-
-    Then, select Apply Update, then Apply from ADB to put the device in ADB sideload mode.
-
-    Press Enter to Flash ROM."
-    adb sideload ROM.zip
-    echo && read -p "Again, on the device, select Apply Update, then Apply from ADB to begin sideload.
-
-    Press Enter to Flash Gapps."
-    adb sideload Gapps.zip
-    echo && read -p "One more time, on the device, select Apply Update, then Apply from ADB to begin sideload.
-
-    Press Enter to Flash Magisk."
-    adb sideload ~/Android/Apps/Magisk.apk
-    cd ../../
+    echo                             
   '')
 
   (pkgs.writeShellScriptBin "OnePlus9-crDroid9-A13" ''
@@ -62,19 +43,6 @@
   (pkgs.writeShellScriptBin "Pixel4-OEM-A13" ''
     cd Pixel4/OEM-A13-Magisk
     bash install.sh
-    cd ../../
-  '')
-
-  (pkgs.writeShellScriptBin "Pixel4-DerpFest-A13" ''
-    cd Pixel4/DerpFest-A13
-    fastboot -w
-    fastboot flash boot boot.img --slot all
-
-    adb wait-for-sideload sideload ROM.zip
-
-    adb wait-for-sideload sideload Gapps.zip
-
-    adb wait-for-sideload sideload ~/Android/Apps/Magisk.apk
     cd ../../
   '')
 
@@ -117,7 +85,7 @@
     cd
   '')
 
-  (pkgs.writeShellScriptBin "PokeApps" '' 
+  (pkgs.writeShellScriptBin "PokeApps" ''
     cd Apps/
     bash installapps.sh
     cd ..
