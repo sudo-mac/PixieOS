@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   services.nextcloud = {
-    enable = true;
+    enable = false;
     hostName = "nextcloud.tld";
     database.createLocally = true;
     config = {
