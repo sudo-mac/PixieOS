@@ -1,30 +1,22 @@
 {
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
-with lib; {
-  imports = [
-    ./rofi.nix
-    ./monitors.nix
-    ./keybindings.nix
-    ./appearance.nix
-    ./waybar
-  ];
+with lib;
+
+{
 
   options = {
     alienix.home.hyprland.enable = mkEnableOption "Enable Hyprland Home-Manager settings";
   };
 
   config = mkIf config.alienix.home.hyprland.enable {
-    # Hyprland Configuration
     wayland.windowManager.hyprland = {
       enable = true;
 
-      settings = {
-        exec-once = ["bash /etc/nixos/modules/nixos/home/desktop/hyprland/start.sh"];
-      };
+      extraLuaFiles.example-lua.autoLoad = true;
     };
 
     # Install extras for better Hyprland user experience

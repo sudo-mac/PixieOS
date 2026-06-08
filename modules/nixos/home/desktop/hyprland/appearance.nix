@@ -1,33 +1,14 @@
+{ ... }:
+
 {
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
   wayland.windowManager.hyprland.settings = {
     general = {
-      border_size = 3;
       gaps_in = 5;
       gaps_out = 15;
-      layout = "dwindle";
+      border_size = 3;
       resize_on_border = true;
-    };
-
-    animations = {
-      enabled = "yes";
-      bezier = [
-        "easeOutQuart, 0.25, 1, 0.5, 1"
-        "easeOutBack, 0.34, 1.56, 0.64, 1"
-      ];
-
-      animation = [
-        "windows, 1, 5, easeOutQuart"
-        "windowsOut, 1, 5, easeOutQuart, popin 20%"
-        "border, 1, 5, easeOutQuart"
-        "borderangle, 1, 30, easeOutQuart, once"
-        "fade, 1, 5, easeOutQuart"
-        "workspaces, 1, 5, easeOutQuart"
-      ];
+      allow_tearing = false;
+      layout = "dwindle";
     };
 
     decoration = {
@@ -51,6 +32,24 @@
         ignore_opacity = false;
       };
     };
+
+    animations = {
+      enabled = "yes";
+      bezier = [
+        "easeOutQuart, 0.25, 1, 0.5, 1"
+        "easeOutBack, 0.34, 1.56, 0.64, 1"
+      ];
+
+      animation = [
+        "windows, 1, 5, easeOutQuart"
+        "windowsOut, 1, 5, easeOutQuart, popin 20%"
+        "border, 1, 5, easeOutQuart"
+        "borderangle, 1, 30, easeOutQuart, once"
+        "fade, 1, 5, easeOutQuart"
+        "workspaces, 1, 5, easeOutQuart"
+      ];
+    };
+
     layerrule = [
       "match:namespace waybar, blur on"
     ];
