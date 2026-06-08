@@ -34,12 +34,17 @@ with lib;
 
         extraLuaFiles = {
           "appearance" = {
-            content = ./example-lua.lua;
+            content = ./appearance.lua;
             autoLoad = true;
           };
 
           "monitors" = {
             content = ./monitors.lua;
+            autoLoad = true;
+          };
+
+          "keybindings" = {
+            content = ./keybindings.lua;
             autoLoad = true;
           };
         };

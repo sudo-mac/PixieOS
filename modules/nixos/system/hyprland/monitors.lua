@@ -5,9 +5,9 @@ h1.monitor({
 	scale = 1,
 })
 
-h1.monitor({
-	output = "HDMI-A-1",
-	mode = "1360x768@60",
-	position = "1920x0",
-	scale = 1,
-})
+-- h1.monitor({
+-- 	output = "HDMI-A-1",
+-- 	mode = "1360x768@60",
+-- 	position = "1920x0",
+-- 	scale = 1,
+-- })

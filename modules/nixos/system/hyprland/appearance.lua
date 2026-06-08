@@ -1,6 +1,6 @@
--- local terminal = "kitty"
--- local fileManager = "dolphin"
--- local menu = "hyprlauncher"
+local terminal = "kitty"
+local fileManager = "dolphin"
+local menu = "hyprlauncher"
 
 hl.on("hyprland.start", function()
 	-- hl.exec_cmd(terminal)
