@@ -1,6 +1,5 @@
 {
   imports = [
-    ../home/desktop/hyprland/config.nix
     ./discord.nix
     ./vscodium.nix
   ];

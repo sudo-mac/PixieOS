@@ -18,7 +18,6 @@
     ./asus.nix
     ./bootloader.nix
     ./virtualisation.nix
-    ../home/desktop/hyprland/hypr.nix
     ./libreoffice.nix
     ./qflipper.nix
     ./screen.nix
@@ -26,6 +25,7 @@
     ./rustdesk.nix
     ./rustdesk-secrets.nix
     ./pokemmo.nix
+    ./hyprland
   ];
 
   # Enabling Flakes

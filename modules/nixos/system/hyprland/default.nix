@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -26,5 +27,33 @@ with lib;
     hardware.graphics.enable = true;
 
     xdg.portal.enable = true;
+
+    home-manager.users.dex.config = {
+      wayland.windowManager.hyprland = {
+        enable = true;
+
+        extraLuaFiles = {
+          "appearance" = {
+            content = ./example-lua.lua;
+            autoLoad = true;
+          };
+
+          "monitors" = {
+            content = ./monitors.lua;
+            autoLoad = true;
+          };
+        };
+      };
+
+      home.packages = with pkgs; [
+        waybar
+        dunst
+        wlogout
+        swaylock
+        awww
+        networkmanagerapplet
+        libnotify
+      ];
+    };
   };
 }
