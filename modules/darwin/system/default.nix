@@ -1,7 +1,8 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./dock.nix
-    ./packages.nix
   ];
 
   system.defaults = {
@@ -20,4 +21,16 @@
     controlcenter.BatteryShowPercentage = true;
 
   };
+
+  environment.systemPackages = with pkgs; [
+    wget
+  ];
+
+  homebrew.casks = [
+    "discord"
+    "rustdesk"
+    "calibre"
+    "freecad"
+    "orcaslicer"
+  ];
 }
