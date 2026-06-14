@@ -1,13 +1,13 @@
-h1.monitor({
+hl.monitor({
 	output = "eDP-1",
 	mode = "1920x1200@144",
 	position = "0x0",
 	scale = 1,
 })
 
--- h1.monitor({
--- 	output = "HDMI-A-1",
--- 	mode = "1360x768@60",
--- 	position = "1920x0",
--- 	scale = 1,
--- })
+hl.monitor({
+	output = "HDMI-A-1",
+	mode = "1360x768@60",
+	position = "1920x0",
+	scale = 1,
+})

@@ -5,12 +5,15 @@
   ...
 }:
 with lib;
+
 {
+
   options = {
     alienix.system.hyprland.enable = mkEnableOption "Enable and configure Hyprland for the system.";
   };
 
   config = mkIf config.alienix.system.hyprland.enable {
+
     nix.settings = {
       substituters = [ "https://hyprland.cachix.org" ];
       trusted-public-keys = [
@@ -33,6 +36,11 @@ with lib;
         enable = true;
 
         extraLuaFiles = {
+          "start" = {
+            content = ./start.lua;
+            autoLoad = true;
+          };
+
           "appearance" = {
             content = ./appearance.lua;
             autoLoad = true;
