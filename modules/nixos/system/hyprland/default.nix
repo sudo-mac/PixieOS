@@ -41,8 +41,8 @@ with lib;
           enable = true;
 
           extraLuaFiles = {
-            "start" = {
-              content = ./start.lua;
+            "autostart" = {
+              content = ./autostart.lua;
               autoLoad = true;
             };
 
@@ -51,8 +51,23 @@ with lib;
               autoLoad = true;
             };
 
+            "animations" = {
+              content = ./animations.lua;
+              autoLoad = true;
+            };
+
+            "rules" = {
+              content = ./rules.lua;
+              autoLoad = true;
+            };
+
             "monitors" = {
               content = ./monitors.lua;
+              autoLoad = true;
+            };
+
+            "input" = {
+              content = ./input.lua;
               autoLoad = true;
             };
 

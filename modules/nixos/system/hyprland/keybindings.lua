@@ -10,12 +10,21 @@ local editor = "kitty nvim"
 local menu = "rofi -show drun -show--icons"
 local lock = "swaylock"
 
+local pxie = "kitty zsh -i -c 'pxie; exec zsh'"
+local pogo = "kitty nix develop /etc/nixos/shells/PoGo-Root"
+local screenshot = "sh -c 'grim -g \"$(slurp)\"'"
+
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(editor))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lock))
+
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("discord"))
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(pxie))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(pogo))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(screenshot))
 
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 closeWindowBind:set_enabled(true)
