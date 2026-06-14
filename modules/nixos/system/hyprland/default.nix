@@ -5,7 +5,6 @@
   ...
 }:
 with lib;
-
 {
 
   options = {
@@ -31,42 +30,49 @@ with lib;
 
     xdg.portal.enable = true;
 
-    home-manager.users.dex.config = {
-      wayland.windowManager.hyprland = {
-        enable = true;
+    home-manager.users.dex = {
+      imports = [
+        ./rofi.nix
+        ./waybar
+      ];
 
-        extraLuaFiles = {
-          "start" = {
-            content = ./start.lua;
-            autoLoad = true;
-          };
+      config = {
+        wayland.windowManager.hyprland = {
+          enable = true;
 
-          "appearance" = {
-            content = ./appearance.lua;
-            autoLoad = true;
-          };
+          extraLuaFiles = {
+            "start" = {
+              content = ./start.lua;
+              autoLoad = true;
+            };
 
-          "monitors" = {
-            content = ./monitors.lua;
-            autoLoad = true;
-          };
+            "appearance" = {
+              content = ./appearance.lua;
+              autoLoad = true;
+            };
 
-          "keybindings" = {
-            content = ./keybindings.lua;
-            autoLoad = true;
+            "monitors" = {
+              content = ./monitors.lua;
+              autoLoad = true;
+            };
+
+            "keybindings" = {
+              content = ./keybindings.lua;
+              autoLoad = true;
+            };
           };
         };
-      };
 
-      home.packages = with pkgs; [
-        waybar
-        dunst
-        wlogout
-        swaylock
-        awww
-        networkmanagerapplet
-        libnotify
-      ];
+        home.packages = with pkgs; [
+          waybar
+          dunst
+          wlogout
+          swaylock
+          awww
+          networkmanagerapplet
+          libnotify
+        ];
+      };
     };
   };
 }
