@@ -81,6 +81,11 @@
         treesitter.enable = true;
         format.enable = true;
       };
+
+      openscad = {
+        enable = true;
+        lsp.enable = true;
+      };
     }
     // lib.optionalAttrs pkgs.stdenv.isLinux {
       csharp = {

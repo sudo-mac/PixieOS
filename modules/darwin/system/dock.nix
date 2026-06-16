@@ -13,7 +13,10 @@
       { app = "/Applications/calibre.app/"; }
       { app = "/Applications/qFlipper.app/"; }
       { app = "/Applications/BambuStudio.app/"; }
+      { app = "/Applications/Nix Apps/Blender.app/"; }
+      { app = "/Applications/FreeCAD.app/"; }
       { app = "/Applications/RustDesk.app/"; }
+      { app = "/System/Applications/iPhone Mirroring.app/"; }
     ];
   };
 }

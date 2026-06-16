@@ -11,7 +11,7 @@ local menu = "rofi -show drun -show--icons"
 local lock = "swaylock"
 
 local pxie = "kitty zsh -i -c 'pxie; exec zsh'"
-local pogo = "kitty nix develop /etc/nixos/shells/PoGo-Root"
+local pogo = "kitty nix develop github:sudo-mac/nix-dev-shells#pogo"
 local screenshot = "sh -c 'grim -g \"$(slurp)\"'"
 
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(terminal))
@@ -25,6 +25,8 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("discord"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(pxie))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(pogo))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(screenshot))
+hl.bind(mainMod .. " + F11", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + F11", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 closeWindowBind:set_enabled(true)
@@ -44,17 +46,36 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
+hl.bind(mainMod .. "+ mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mainMod .. "+ Z", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mainMod .. "+ mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(mainMod .. "+ X", hl.dsp.window.resize(), { mouse = true })
+
+hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.resize({ x = 30, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.resize({ x = -30, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.resize({ x = 0, y = 30, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.resize({ x = 0, y = -30, relative = true }), { repeating = true })
+
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
 	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
+
+hl.bind(mainMod .. " + CTRL + RIGHT", hl.dsp.focus({ workspace = "r+1" }))
+hl.bind(mainMod .. " + CTRL + LEFT", hl.dsp.focus({ workspace = "r-1" }))
+hl.bind(mainMod .. " + SHIFT + CTRL + RIGHT", hl.dsp.window.move({ workspace = "r+1" }))
+hl.bind(mainMod .. " + SHIFT + CTRL + LEFT", hl.dsp.window.move({ workspace = "r-1" }))
+
+hl.bind(mainMod .. " + CTRL + DOWN", hl.dsp.window.move({ workspace = "emptyn" }))
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + ALT + S", hl.dsp.window.move({ workspace = "special:magic", follow = false }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

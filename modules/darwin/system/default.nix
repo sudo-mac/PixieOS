@@ -30,6 +30,8 @@
     "discord"
     "rustdesk"
     "calibre"
+    "gimp"
+    "inkscape"
     "freecad"
     "orcaslicer"
   ];

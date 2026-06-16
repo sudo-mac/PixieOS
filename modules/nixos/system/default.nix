@@ -99,6 +99,7 @@
     gparted
     grim
     gzip
+    inkscape
     inputs.iio-hyprland.packages.${pkgs.stdenv.hostPlatform.system}.default
     jq
     kdePackages.ark
@@ -110,6 +111,7 @@
     nix-output-monitor
     onefetch
     openrazer-daemon
+    orca-slicer
     p7zip
     polychromatic
     razer-cli
@@ -136,5 +138,5 @@
   ];
 
   # NixOS Version
-  system.stateVersion = "25.11"; # Did you read the comment?
+  system.stateVersion = "26.11"; # Did you read the comment?
 }

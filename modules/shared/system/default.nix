@@ -14,6 +14,8 @@
     tree
     weathr
     lolcat
+    blender
+    openscad-unstable
     fastfetch
     onefetch
   ];

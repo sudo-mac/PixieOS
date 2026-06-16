@@ -94,6 +94,32 @@
           ];
         };
 
+        asahi = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/asahi/configuration.nix
+            # home-manager.nixosModules.home-manager
+            # stylix.nixosModules.stylix
+            # nix-flatpak.nixosModules.nix-flatpak
+            # {
+            #   home-manager = {
+            #     useUserPackages = true;
+            #     backupFileExtension = "backup";
+            #     sharedModules = [
+            #       nvf.homeManagerModules.default
+            #       nixcord.homeModules.nixcord
+            #     ];
+            #     extraSpecialArgs = { inherit inputs; };
+            #     users.dex.imports = [
+            #       ./hosts/alienix/home
+            #       ./modules/shared/home
+            #     ];
+            #   };
+            # }
+          ];
+        };
+
         recovery = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [ ./recovery/configuration.nix ];
