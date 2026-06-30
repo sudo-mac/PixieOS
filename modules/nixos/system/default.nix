@@ -13,6 +13,7 @@
     ./audio.nix
     ./graphics.nix
     ./gaming.nix
+    ./claude.nix
     ./minecraft
     ./roblox.nix
     ./asus.nix
@@ -84,7 +85,6 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    anydesk
     appimage-run
     bat
     brightnessctl
