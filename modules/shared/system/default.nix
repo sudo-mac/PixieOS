@@ -4,7 +4,10 @@
     ./ssh.nix
     ./stylix.nix
     ./tmux.nix
+    ./claude.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     nh

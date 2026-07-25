@@ -13,7 +13,6 @@
     ./audio.nix
     ./graphics.nix
     ./gaming.nix
-    ./claude.nix
     ./minecraft
     ./roblox.nix
     ./asus.nix
@@ -80,9 +79,6 @@
   };
 
   hardware.sensor.iio.enable = true;
-
-  # Allow Unfree Packages
-  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     appimage-run
