@@ -15,7 +15,7 @@
     weathr
     lolcat
     blender
-    openscad-unstable
+    openscad
     fastfetch
     onefetch
   ];

@@ -34,19 +34,22 @@ with lib;
   };
 
   home-manager = optionalAttrs config.nixpkgs.hostPlatform.isLinux {
-    users.dex.config.stylix = {
-      cursor = {
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Ice";
-        size = 32;
-      };
+    users.dex.config = {
+      home.pointerCursor.enable = true;
+      stylix = {
+        cursor = {
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
+          size = 32;
+        };
 
-      targets = {
-        kde.enable = false;
-        kde.decorations.enable = false;
-        gtk.enable = false;
-        qt.enable = false;
-        rofi.enable = true;
+        targets = {
+          kde.enable = false;
+          kde.decorations.enable = false;
+          gtk.enable = false;
+          qt.enable = false;
+          rofi.enable = true;
+        };
       };
     };
   };

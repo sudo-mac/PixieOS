@@ -4,6 +4,7 @@
     vesktop.enable = true; # Vesktop -- currently broken, again... [ 01/02/2026 ]
     dorion.enable = false; # Dorion
     quickCss = "some CSS"; # quickCSS file
+    discord.silenceNoModClientWarning = true;
     config = {
       useQuickCss = true; # use out quickCSS
       themeLinks = [
