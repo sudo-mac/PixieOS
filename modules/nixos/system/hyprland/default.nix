@@ -34,6 +34,8 @@ with lib;
       imports = [
         ./rofi.nix
         ./waybar
+        ./swaylock.nix
+        ./dunst.nix
       ];
 
       config = {
@@ -82,7 +84,6 @@ with lib;
           waybar
           dunst
           wlogout
-          swaylock
           awww
           networkmanagerapplet
           libnotify
