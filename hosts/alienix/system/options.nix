@@ -6,6 +6,7 @@
     ssh.enable = true;
     virtualisation.enable = true;
     libreoffice.enable = true;
+    nextcloud.enable = false;
 
     gaming = {
       enable = true;
