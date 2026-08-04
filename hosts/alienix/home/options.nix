@@ -4,5 +4,6 @@
     firefox.enable = true;
     shell.enable = true;
     git.enable = true;
+    claude-code.enable = true;
   };
 }

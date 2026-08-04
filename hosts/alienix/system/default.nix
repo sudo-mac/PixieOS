@@ -2,6 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ./options.nix
+    ./ssd.nix
   ];
 
   # Set the hostname.

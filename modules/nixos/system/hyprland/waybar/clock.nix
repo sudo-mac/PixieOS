@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  colors = config.lib.stylix.colors;
+in
 {
   programs.waybar = {
     settings.mainBar.clock = {
@@ -10,11 +14,11 @@
         weeks-pos = "right";
         on-scroll = 1;
         format = {
-          months = "<span color='#ffead3'><b>{}</b></span>";
-          days = "<span color='#ecc6d9'><b>{}</b></span>";
-          weeks = "<span color='#99ffdd'><b>W{}</b></span>";
-          weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-          today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+          months = "<span color='#${colors.base0D}'><b>{}</b></span>";
+          days = "<span color='#${colors.base05}'><b>{}</b></span>";
+          weeks = "<span color='#${colors.base0B}'><b>W{}</b></span>";
+          weekdays = "<span color='#${colors.base0A}'><b>{}</b></span>";
+          today = "<span color='#${colors.base08}'><b><u>{}</u></b></span>";
         };
       };
       actions = {

@@ -11,7 +11,11 @@
     ./pulseaudio.nix
     ./workspaces.nix
     ./network.nix
+    ./window.nix
+    ./media.nix
   ];
+
+  home.packages = [ pkgs.playerctl ];
 
   programs.waybar = {
     enable = true;
@@ -22,11 +26,17 @@
         position = "top";
         blur = true;
 
-        modules-left = ["hyprland/workspaces"];
+        modules-left = ["hyprland/workspaces" "hyprland/window"];
 
-        modules-center = ["clock"];
+        modules-center = ["clock" "mpris" "custom/media-popup"];
 
-        modules-right = ["cpu" "network" "pulseaudio" "battery" "custom/power"];
+        modules-right = ["cpu" "network" "pulseaudio" "battery" "tray" "custom/power"];
+
+        "custom/media-popup" = {
+          format = "";
+          tooltip = "Now playing — click to expand";
+          on-click = ''rofi -show media-player -modi "media-player:$HOME/.config/rofi/scripts/media-player.sh"'';
+        };
 
         "custom/power" = {
           format = "⏻";
@@ -59,11 +69,11 @@
 
        border: 1px solid alpha(@base0D, 0.18);
        border-width: 0px;
-       border-radius: 8px;
+       border-radius: 0px;
        border-bottom: none;
        padding: 8px 20px;
        min-height: 64px;
-       margin: 4px 0;
+       margin: 0;
       }
 
       #clock,
@@ -72,7 +82,8 @@
       #pulseaudio,
       #custom-power,
       #battery,
-      #network {
+      #network,
+      #mpris {
         background: alpha(@base01, 0.95);
         border: 1px solid alpha(@base0D, 0.24);
         color: @base08;
@@ -86,6 +97,21 @@
         padding: 6px 12px;
         margin: 0 10px;
         min-height: 28px;
+      }
+
+      #mpris {
+        color: @base0B;
+        margin-right: 0;
+      }
+
+      #custom-media-popup {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        color: alpha(@base0B, 0.85);
+        padding: 6px 8px 6px 2px;
+        margin: 0 10px 0 0;
+        min-height: 0;
       }
     '';
   };

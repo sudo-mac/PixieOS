@@ -8,7 +8,7 @@ local fileManager = "kitty yazi"
 local browser = "librewolf"
 local editor = "kitty nvim"
 local menu = "rofi -show drun -show--icons"
-local lock = "swaylock"
+local lock = "hyprlock"
 
 local pxie = "kitty zsh -i -c 'pxie; exec zsh'"
 local pogo = "kitty nix develop github:sudo-mac/nix-dev-shells#pogo"
@@ -53,8 +53,14 @@ hl.bind(mainMod .. "+ X", hl.dsp.window.resize(), { mouse = true })
 
 hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.resize({ x = 30, y = 0, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.resize({ x = -30, y = 0, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.resize({ x = 0, y = 30, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.resize({ x = 0, y = -30, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.resize({ x = 0, y = -30, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.resize({ x = 0, y = 30, relative = true }), { repeating = true })
+
+-- Move floating windows with mainMod + ALT + arrow keys
+hl.bind(mainMod .. " + ALT + RIGHT", hl.dsp.window.move({ x = 30, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + LEFT", hl.dsp.window.move({ x = -30, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + UP", hl.dsp.window.move({ x = 0, y = -30, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + DOWN", hl.dsp.window.move({ x = 0, y = 30, relative = true }), { repeating = true })
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]

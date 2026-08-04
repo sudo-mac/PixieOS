@@ -34,7 +34,7 @@ with lib;
       imports = [
         ./rofi.nix
         ./waybar
-        ./swaylock.nix
+        ./hyprlock.nix
         ./dunst.nix
       ];
 

@@ -6,6 +6,11 @@ hl.config({
 		resize_on_border = true,
 		allow_tearing = false,
 		layout = "dwindle",
+
+		col = {
+			active_border = { colors = { "rgba(4fdfffee)", "rgba(b388ffee)" }, angle = 45 },
+			inactive_border = "rgba(163854aa)",
+		},
 	},
 
 	decoration = {

@@ -23,16 +23,5 @@ with lib; {
       80
       443
     ];
-
-    fileSystems."/mnt/e-Garage" = {
-      device = "/dev/disk/by-uuid/68E9-5E19";
-      fsType = "exfat";
-      options = [
-        "uid=1000"
-        "gid=100"
-        "nofail"
-        "auto"
-      ];
-    };
   };
 }

@@ -7,6 +7,7 @@
     virtualisation.enable = true;
     libreoffice.enable = true;
     nextcloud.enable = false;
+    ssd.enable = true;
 
     gaming = {
       enable = true;

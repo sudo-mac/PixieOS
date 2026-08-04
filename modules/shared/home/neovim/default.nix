@@ -49,12 +49,29 @@
 
         comments.comment-nvim.enable = true;
         statusline.lualine.enable = true;
-        dashboard.dashboard-nvim.enable = true;
+        dashboard.dashboard-nvim = {
+          enable = true;
+          setupOpts.config.header = [
+            ""
+            ""
+            "..█.. █.... █████ █████ █...█ █████ █...█"
+            ".█.█. █.... ..█.. █.... ██..█ ..█.. .█.█."
+            "█...█ █.... ..█.. ████. █.█.█ ..█.. ..█.."
+            "█████ █.... ..█.. █.... █..██ ..█.. .█.█."
+            "█...█ █████ █████ █████ █...█ █████ █...█"
+            ""
+            ""
+          ];
+        };
         autocomplete.blink-cmp.enable = true;
 
         filetree.neo-tree.enable = true;
 
         visuals.cinnamon-nvim.enable = true;
+
+        luaConfigPost = ''
+          vim.api.nvim_set_hl(0, "DashboardHeader", { fg = "#4fdfff", bold = true })
+        '';
       };
     };
   };
