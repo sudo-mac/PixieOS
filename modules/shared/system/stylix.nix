@@ -1,46 +1,18 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, lib, config, ... }:
 with lib;
+let
+  theme = config.alienix.theme.active;
+in
 {
-  stylix = {
-    enable = true;
-
-    base16Scheme = {
-      base00 = "071726";
-      base01 = "0e2438";
-      base02 = "163854";
-      base03 = "2a5573";
-      base04 = "6fa3c9";
-      base05 = "b8dcff";
-      base06 = "e6f4ff";
-      base07 = "f2fbff";
-
-      base08 = "ff4f9a";
-      base09 = "ff8cc6";
-      base0A = "ffd166";
-      base0B = "6fffd2";
-      base0C = "4fdfff";
-      base0D = "3aa6ff";
-      base0E = "b388ff";
-      base0F = "ff6fd8";
-    };
-  }
-  // optionalAttrs config.nixpkgs.hostPlatform.isLinux {
-    image = ../../../wallpapers/anime/cybergirl.jpg;
-  };
-
+  # The palette, wallpaper and fonts come from the active theme
+  # (modules/themes). This file only decides which stylix targets are allowed
+  # to act on them.
   home-manager = optionalAttrs config.nixpkgs.hostPlatform.isLinux {
     users.dex.config = {
       home.pointerCursor.enable = true;
       stylix = {
         cursor = {
-          package = pkgs.bibata-cursors;
-          name = "Bibata-Modern-Ice";
-          size = 32;
+          inherit (theme.cursor) package name size;
         };
 
         targets = {
@@ -49,6 +21,12 @@ with lib;
           gtk.enable = false;
           qt.enable = false;
           rofi.enable = true;
+
+          # Hyprland's border colours are set by the generated appearance.lua,
+          # from the theme's border tokens. Two sources for one setting only
+          # ever fight -- previously stylix wrote a flat rgb(3aa6ff) while the
+          # Lua wrote a gradient, and load order decided the winner.
+          hyprland.enable = false;
         };
       };
     };

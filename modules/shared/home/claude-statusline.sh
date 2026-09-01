@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# Themed to the alienix stylix base16 scheme (/etc/nixos/modules/shared/system/stylix.nix)
+# Colours are substituted in from the active theme (modules/themes) at build
+# time -- see modules/shared/home/claude-code.nix. Do not hardcode hex here.
 input=$(cat)
 
-BASE01="0e2438"
-BASE02="163854"
-BASE04="6fa3c9"
-BASE05="b8dcff"
-BASE08="ff4f9a"
-BASE0A="ffd166"
-BASE0B="6fffd2"
-BASE0C="4fdfff"
-BASE0D="3aa6ff"
-
+BASE01="@base01@"
+BASE02="@base02@"
+BASE04="@base04@"
+BASE05="@base05@"
+BASE08="@accent@"
+BASE0A="@warn@"
+BASE0B="@ok@"
+BASE0C="@info@"
+BASE0D="@edge@"
 fg() { printf '\033[38;2;%d;%d;%dm' "0x${1:0:2}" "0x${1:2:2}" "0x${1:4:2}"; }
 bg() { printf '\033[48;2;%d;%d;%dm' "0x${1:0:2}" "0x${1:2:2}" "0x${1:4:2}"; }
 R=$'\033[0m'

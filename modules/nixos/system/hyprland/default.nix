@@ -5,6 +5,10 @@
   ...
 }:
 with lib;
+let
+  theme = config.alienix.theme.active;
+  hypr = theme.style.hyprland theme;
+in
 {
 
   options = {
@@ -31,11 +35,15 @@ with lib;
     xdg.portal.enable = true;
 
     home-manager.users.dex = {
+      # Every component slot is imported unconditionally -- `imports` cannot
+      # live inside mkIf -- and each module gates its own config on the active
+      # theme's `components` selection.
       imports = [
-        ./rofi.nix
-        ./waybar
-        ./hyprlock.nix
-        ./dunst.nix
+        ./launcher/rofi.nix
+        ./bar/waybar
+        ./lock/hyprlock.nix
+        ./notifier/dunst.nix
+        ./wallpaper/awww.nix
       ];
 
       config = {
@@ -48,13 +56,18 @@ with lib;
               autoLoad = true;
             };
 
+            # Generated from the theme: borders, rounding, blur, opacity, gaps
+            # and cursor size all come from its tokens.
             "appearance" = {
-              content = ./appearance.lua;
+              content = pkgs.writeText "appearance.lua" ''
+                ${hypr.appearance}
+                ${hypr.cursorEnv}
+              '';
               autoLoad = true;
             };
 
             "animations" = {
-              content = ./animations.lua;
+              content = pkgs.writeText "animations.lua" hypr.animations;
               autoLoad = true;
             };
 
@@ -81,10 +94,7 @@ with lib;
         };
 
         home.packages = with pkgs; [
-          waybar
-          dunst
           wlogout
-          awww
           networkmanagerapplet
           libnotify
         ];

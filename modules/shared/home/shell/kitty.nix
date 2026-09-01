@@ -3,8 +3,6 @@
     enable = true;
 
     settings = {
-      font_family = "JetBrainsMono Nerd Font";
-      font_size = "14";
       cursor_trail = "3";
       cursor_shape = "block";
       repaint_delay = "8";

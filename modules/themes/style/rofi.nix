@@ -1,33 +1,20 @@
+# Presentation for the launcher: a .rasi stylesheet.
+{ tokens, fonts, icons, c, ... }:
+let
+  inherit (tokens) radius;
+in
 {
-  inputs,
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
-  colors = config.lib.stylix.colors;
-in {
-  programs.rofi = {
-    enable = true;
-    theme = lib.mkForce "pixieos";
-  };
+  iconTheme = icons.name;
 
-  xdg.configFile."rofi/pixieos.rasi".text = ''
-    configuration {
-      show-icons: true;
-      icon-theme: "Papirus";
-      display-drun: " ";
-      drun-display-format: "{icon}  {name}";
-    }
-
+  rasi = ''
     * {
-      font: "JetBrainsMono Nerd Font Propo 16";
+      font: "${fonts.ui.name} 16";
 
-      base00: #${colors.base00};
-      base01: #${colors.base01};
-      base05: #${colors.base05};
-      base08: #${colors.base08};
-      base0D: #${colors.base0D};
+      base00: ${c.hex "base00"};
+      base01: ${c.hex "base01"};
+      base05: ${c.hex "base05"};
+      accent: ${c.accentHex "primary"};
+      edge:   ${c.hex "base0D"};
 
       background: transparent;
       foreground: @base05;
@@ -37,32 +24,32 @@ in {
     window {
       width: 720px;
       border: 2px;
-      border-radius: 18px;
+      border-radius: ${toString radius.card}px;
       padding: 14px;
 
-      border-color: @base0D;
+      border-color: @edge;
       background-color: @base00;
     }
 
     mainbox {
-        spacing: 12px;
-        background-color: transparent;
+      spacing: 12px;
+      background-color: transparent;
     }
 
     inputbar {
       background-color: @base01;
-      border-radius: 999px;
+      border-radius: ${toString radius.pill}px;
       padding: 10px 12px;
     }
 
     entry {
       background-color: transparent;
-      text-color: @base08;
-      cursor: @base0D;
+      text-color: @accent;
+      cursor: @edge;
     }
 
     prompt {
-        background-color: transparent;
+      background-color: transparent;
     }
 
     case-indicator { background-color: transparent; }
@@ -83,7 +70,7 @@ in {
 
     element {
       background-color: @base01;
-      border-radius: 999px;
+      border-radius: ${toString radius.pill}px;
       padding: 10px 12px;
       text-color: @base05;
     }
@@ -101,7 +88,7 @@ in {
     }
 
     element selected {
-      background-color: @base08;
+      background-color: @accent;
       text-color: @base00;
     }
   '';
