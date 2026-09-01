@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 with lib; {
@@ -59,10 +58,5 @@ with lib; {
         exec zsh
       fi
     '';
-
-    # Install Terminal Add-on Packages and Fontsv
-    home.packages = with pkgs; [
-      nerd-fonts.jetbrains-mono
-    ];
   };
 }

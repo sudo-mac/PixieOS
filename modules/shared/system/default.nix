@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ../../themes
     ./ssh.nix
     ./stylix.nix
     ./tmux.nix

@@ -1,4 +1,6 @@
 {
+  alienix.theme.name = "kimberly";
+
   alienix.system = {
     asus.enable = true;
     graphics.nvidia.enable = true;

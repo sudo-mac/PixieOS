@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  theme = config.alienix.theme.active;
+in
 
 {
   imports = [
@@ -70,7 +73,7 @@
         visuals.cinnamon-nvim.enable = true;
 
         luaConfigPost = ''
-          vim.api.nvim_set_hl(0, "DashboardHeader", { fg = "#4fdfff", bold = true })
+          vim.api.nvim_set_hl(0, "DashboardHeader", { fg = "${theme.c.accentHex "info"}", bold = true })
         '';
       };
     };
