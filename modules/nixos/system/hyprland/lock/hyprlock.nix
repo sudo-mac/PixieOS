@@ -62,7 +62,6 @@ in
           # "170" here means 170px above true center, not below.
           ({
             text = "<b>$TIME</b>";
-            font_size = 150;
             position = "0, 170";
             halign = "center";
             valign = "center";
@@ -77,7 +76,6 @@ in
           # sharper, more "designed" look under the big clock.
           ({
             text = ''cmd[update:43200000] date +'%A, %d %B' | tr '[:lower:]' '[:upper:]' '';
-            font_size = 30;
             position = "0, 40";
             halign = "center";
             valign = "center";
@@ -88,7 +86,6 @@ in
           # (bottom-anchored) rather than stacked with the clock/date above.
           ({
             text = "<i>Welcome back, dex</i>";
-            font_size = 20;
             position = "0, 210";
             halign = "center";
             valign = "bottom";

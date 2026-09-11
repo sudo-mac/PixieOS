@@ -7,12 +7,25 @@ local terminal = "kitty"
 local fileManager = "kitty yazi"
 local browser = "librewolf"
 local editor = "kitty nvim"
-local menu = "rofi -show drun -show--icons"
+local menu = "rofi -show drun"
 local lock = "hyprlock"
 
 local pxie = "kitty zsh -i -c 'pxie; exec zsh'"
 local pogo = "kitty nix develop github:sudo-mac/nix-dev-shells#pogo"
-local screenshot = "sh -c 'grim -g \"$(slurp)\"'"
+-- Region screenshot, to the clipboard and to a dated file. hyprland already
+-- runs `exec` through a shell, so this is a plain script rather than a nested
+-- `sh -c '...'`. Cancelling slurp exits cleanly instead of handing grim an
+-- empty geometry, which is what the old one-liner did (silently, and it wrote
+-- its output to hyprland's working directory).
+local screenshot = [[
+dir="$HOME/Pictures/Screenshots"
+mkdir -p "$dir"
+geom=$(slurp -d) || exit 0
+[ -n "$geom" ] || exit 0
+file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+grim -g "$geom" "$file" && wl-copy < "$file" &&
+	notify-send "Screenshot" "Copied to clipboard and saved to $file"
+]]
 
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
@@ -31,14 +44,18 @@ hl.bind(mainMod .. " + SHIFT + F11", hl.dsp.window.fullscreen({ mode = "fullscre
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 closeWindowBind:set_enabled(true)
 
-hl.bind(
-	mainMod .. " + ESCAPE",
-	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
-)
+-- SUPER+ESCAPE used to end the session outright, with no confirmation, on a key
+-- that sits next to SUPER -- `hyprshutdown` does not exist here, so the fallback
+-- always ran. It now opens the power menu, which is otherwise reachable only by
+-- clicking the bar. The real exit moved one modifier away.
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("wlogout"))
+hl.bind(mainMod .. " + SHIFT + ESCAPE", hl.dsp.exit())
 
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
+-- P is the pxie shell above -- that is the bind reached for daily, pseudo is
+-- not -- so pseudo took the shifted chord rather than the bare key.
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only; see tokens.layout.window.engine
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -46,10 +63,11 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
-hl.bind(mainMod .. "+ mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. "+ Z", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. "+ mouse:273", hl.dsp.window.resize(), { mouse = true })
-hl.bind(mainMod .. "+ X", hl.dsp.window.resize(), { mouse = true })
+-- Alternate chords for the LMB/RMB drag modifiers bound at the end of this
+-- file. These are pointer-tracking binds, not keyboard-only ones: the key only
+-- chooses which button starts the drag, you still move the mouse.
+hl.bind(mainMod .. " + Z", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mainMod .. " + X", hl.dsp.window.resize(), { mouse = true })
 
 hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.resize({ x = 30, y = 0, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.resize({ x = -30, y = 0, relative = true }), { repeating = true })

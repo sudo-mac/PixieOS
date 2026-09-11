@@ -16,10 +16,16 @@ in
         };
 
         targets = {
-          kde.enable = false;
-          kde.decorations.enable = false;
-          gtk.enable = false;
-          qt.enable = false;
+          # GTK and Qt build straight from base16Scheme, which the theme already
+          # supplies, so they follow the active theme without needing a style
+          # file of their own. They were off, which left pavucontrol, the
+          # network editor, nm-applet, dolphin, ark and every file dialog in
+          # stock light Adwaita on a dark desktop.
+          gtk.enable = true;
+          qt.enable = true;
+          # (kde.decorations is a string naming a decoration library, not a flag --
+          # the old `kde.decorations.enable = false` here was a no-op.)
+          kde.enable = true;
           rofi.enable = true;
 
           # Hyprland's border colours are set by the generated appearance.lua,
