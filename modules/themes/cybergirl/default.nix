@@ -35,6 +35,36 @@
   # The shared style vocabulary. Every component reads these instead of
   # hardcoding literals, so the whole desktop reshapes from one place.
   tokens = {
+
+    # A single continuous bar across the top, a list launcher, and the long
+    # eased motion the blur is built around. These are also mkTheme's defaults
+    # -- stated here rather than inherited so the two themes read as peers.
+    layout = {
+      bar = {
+        position = "top";
+        height = 64;
+        islands = false;
+        margin = 0;
+      };
+
+      launcher = {
+        mode = "list";
+        columns = 1;
+        lines = 8;
+        width = 720;
+        iconSize = 20;
+      };
+
+      window = {
+        engine = "dwindle";
+        motion = "smooth";
+      };
+
+      notifier = {
+        position = "top-right";
+      };
+    };
+
     radius = {
       pill = 999;
       window = 10;
@@ -69,16 +99,21 @@
       ];
     };
 
-    # This theme uses neon glow for depth, not a cast shadow.
+    # This theme uses neon glow for depth, not a cast shadow. The rest of the
+    # group is stated anyway so the token shape is the same in every theme and
+    # flipping `enable` is the only edit needed to try one.
     shadow = {
       enable = false;
       x = 0;
       y = 0;
+      range = 0;
+      power = 3;
       color = "base00";
       a = 0.0;
     };
 
     opacity = {
+      terminal = 0.75;
       active = 0.75;
       inactive = 0.8;
       panel = 0.95;

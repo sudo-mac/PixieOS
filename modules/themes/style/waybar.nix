@@ -3,14 +3,18 @@
 # Pango markup inside its config rather than as CSS.
 { tokens, fonts, c, ... }:
 let
-  inherit (tokens) radius opacity;
+  inherit (tokens)
+    radius
+    opacity
+    layout
+    ;
 
-  glow = c.glowCss tokens.glow.color;
+  glow = c.glowCss c.edge;
 
   # The rounded, glowing "pill" every bar module sits in.
   pill = ''
     background: alpha(@base01, ${toString opacity.panel});
-    border: 1px solid alpha(@${tokens.glow.color}, 0.24);
+    border: 1px solid alpha(@${c.edge}, 0.24);
 
     box-shadow:
       ${glow};
@@ -23,7 +27,7 @@ in
     * {
       border: none;
 
-      font-size: 16px;
+      font-size: ${toString fonts.sizes.desktop}pt;
       font-family: ${fonts.ui.name};
       font-weight: 500;
 
@@ -40,12 +44,12 @@ in
         alpha(@base00, ${toString opacity.bar})
       );
 
-      border: 1px solid alpha(@${tokens.glow.color}, 0.18);
+      border: 1px solid alpha(@${c.edge}, 0.18);
       border-width: 0px;
       border-radius: 0px;
       border-bottom: none;
       padding: 8px 20px;
-      min-height: 64px;
+      min-height: ${toString layout.bar.height}px;
       margin: 0;
     }
 
@@ -108,7 +112,37 @@ in
       box-shadow: none;
     }
 
+    /* Driven by the cpu module's `states`, so a busy machine is legible from
+       the colour alone. */
+    #cpu.warning {
+      color: @${c.slotOf "warn"};
+    }
+
+    #cpu.critical {
+      color: @${c.slotOf "err"};
+    }
+
+    /* On screen somewhere -- this output or the other one. Outlined, not
+       filled: the fill below belongs to the screen the bar is actually on. */
+    #workspaces button.visible {
+      color: @${c.slotOf "secondary"};
+      box-shadow: inset 0 0 0 1px alpha(@${c.edge}, 0.45);
+    }
+
+    /* Where the keyboard is. waybar computes .active from the *globally* focused
+       workspace, so it lands on the same button on every bar -- on a second
+       monitor that means both bars claim you are on a workspace only one of them
+       is showing. Marked, not filled, for exactly that reason. */
     #workspaces button.active {
+      color: @${c.slotOf "primary"};
+      box-shadow: inset 0 0 0 2px @${c.slotOf "primary"};
+    }
+
+    /* What *this* bar's monitor is displaying. .hosting-monitor is the only
+       class waybar scopes to the bar's own output, so it is the one that can
+       answer "where am I" on a multi-monitor desktop. Two classes, so it beats
+       the single-class rules above regardless of source order. */
+    #workspaces button.visible.hosting-monitor {
       color: @base00;
 
       border: none;
@@ -120,26 +154,73 @@ in
         @${c.slotOf "secondary"}
       );
 
-      box-shadow:
-        ${c.glowCss (c.slotOf "primary")},
-        0 0 14px alpha(@${c.slotOf "primary"}, 0.18);
+      box-shadow: ${c.glowCss (c.slotOf "primary")};
+
+      min-width: 50px;
+    }
+
+    /* This screen, and the keyboard too. */
+    #workspaces button.active.hosting-monitor {
+      color: @base00;
+
+      border: none;
+      border-radius: ${toString radius.pill}px;
+
+      background: linear-gradient(
+        135deg,
+        @${c.slotOf "primary"},
+        @${c.slotOf "secondary"}
+      );
+
+      box-shadow: ${c.glowCss (c.slotOf "primary")};
 
       min-width: 50px;
     }
   '';
 
-  # Load ramp, quiet -> busy.
+  # Load ramp, quiet -> busy, for the cpu module's click-through view (see
+  # bar/waybar/cpu.nix -- the resting format is a glyph and a percentage).
+  #
+  # It is a click-through rather than the default because none of this fixes the
+  # resting case: sixteen cores at rest all render the same 1/8 block on the text
+  # baseline, and sixteen identical marks in a row is a dashed rule no matter how
+  # they are coloured. Dimming the two idle steps was one attempt and widening
+  # the columns with letter_spacing (Pango, in 1024ths of a point) was another;
+  # both help under load and neither helps at idle, because the shape is what is
+  # wrong. Behind a click the ramp is being read deliberately, which is the one
+  # context where sixteen columns earn their space.
   cpuFormatIcons =
-    map (pair: "<span color='${c.hex (builtins.head pair)}'>${builtins.elemAt pair 1}</span>") [
-      [ (c.slotOf "ok") "▁" ]
-      [ (c.slotOf "ok") "▂" ]
-      [ "base0D" "▃" ]
-      [ "base0D" "▄" ]
-      [ (c.slotOf "warn") "▅" ]
+    map (
+      pair: "<span letter_spacing='1536' color='${c.hex (builtins.head pair)}'>${builtins.elemAt pair 1}</span>"
+    ) [
+      [ "base03" "▁" ]
+      [ "base04" "▂" ]
+      [ (c.slotOf "ok") "▃" ]
+      [ (c.slotOf "ok") "▄" ]
+      [ (c.slotOf "info") "▅" ]
       [ (c.slotOf "warn") "▆" ]
-      [ "base09" "▇" ]
+      [ (c.slotOf "secondary") "▇" ]
       [ (c.slotOf "primary") "█" ]
     ];
+
+  # The clock is the module the eye lands on first, so it is typeset rather than
+  # printed: the digits carry the weight and the meridiem drops back to a small
+  # accent-coloured suffix instead of sitting at the same size as the time. The
+  # old format was one flat run of same-size, same-colour glyphs.
+  #
+  # The Pango markup goes *inside* the chrono spec. Everything in there that is
+  # not a % escape passes through strftime as literal text, so the span survives
+  # to the label, where waybar renders it as markup.
+  clockFormat = "{:%I:%M<span size='small' foreground='${c.accentHex "secondary"}'> %p</span>}";
+
+  # The click-through long form: same trick, roles swapped -- here the date is
+  # the subject and the 24h time is the accent.
+  #
+  # Both strings have to *open* with a % escape. fmt parses the chrono spec
+  # itself and rejects one that starts with literal text ("no '%' at start of
+  # chrono-specs"), which waybar reports to its log and renders as an empty
+  # module -- so the span cannot be wrapped around the whole thing.
+  clockFormatAlt = "{:%A, %B %d<span foreground='${c.accentHex "secondary"}'>  %R</span>}";
 
   calendarFormat = {
     months = "<span color='${c.hex "base0D"}'><b>{}</b></span>";

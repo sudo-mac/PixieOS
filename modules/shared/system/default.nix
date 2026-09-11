@@ -4,7 +4,6 @@
     ../../themes
     ./ssh.nix
     ./stylix.nix
-    ./tmux.nix
     ./claude.nix
   ];
 
@@ -14,7 +13,6 @@
     nh
     nix-output-monitor
     bat
-    btop
     tree
     weathr
     lolcat

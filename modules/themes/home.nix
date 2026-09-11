@@ -15,9 +15,7 @@ in
     description = "The resolved theme, inherited from the system configuration.";
   };
 
-  # Fonts and the cursor are installed by stylix, which the theme feeds. The
-  # icon theme has no stylix target, so install it here -- rofi has been asking
-  # for Papirus by name without anything providing it. Linux only: icon themes
-  # are a desktop concern and their packages don't build on darwin.
-  config.home.packages = optionals pkgs.stdenv.hostPlatform.isLinux [ theme.icons.package ];
+  # Fonts, the cursor and the icon theme are all installed by stylix, which the
+  # theme feeds -- see the `icons` block in ./default.nix. Nothing left to
+  # install here.
 }

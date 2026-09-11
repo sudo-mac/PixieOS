@@ -19,7 +19,7 @@
 
       pogo = "nix develop github:sudo-mac/nix-dev-shells#pogo";
     }
-    // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       switch = "nh darwin switch .#darwin";
       build = "nh darwin build .#darwin";
       rsync-flake = "rsync -av alienix:/etc/nixos /etc/nixos";
