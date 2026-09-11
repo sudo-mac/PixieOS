@@ -104,7 +104,7 @@ with lib;
       stylix.targets.librewolf.profileNames = [ "default" ];
     })
 
-    (mkIf (config.alienix.home.firefox.enable && pkgs.stdenv.isLinux) {
+    (mkIf (config.alienix.home.firefox.enable && pkgs.stdenv.hostPlatform.isLinux) {
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {

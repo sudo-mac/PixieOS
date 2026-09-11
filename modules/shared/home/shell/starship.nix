@@ -30,7 +30,7 @@
         };
       };
     }
-    // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       enable = true;
     };
 }

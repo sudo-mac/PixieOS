@@ -45,6 +45,28 @@ in
     }
     // optionalAttrs config.nixpkgs.hostPlatform.isLinux {
       image = cfg.active.wallpaper;
+
+      # The theme already has an opacity language -- hyprland reads the same
+      # tokens for its window opacities. Handing them to stylix as well is what
+      # makes a terminal actually honour it; without this kitty sat fully opaque
+      # while hyprland was told to draw it at 0.75.
+      opacity = {
+        terminal = cfg.active.tokens.opacity.terminal;
+        desktop = cfg.active.tokens.opacity.bar;
+        popups = cfg.active.tokens.opacity.panel;
+        applications = cfg.active.tokens.opacity.active;
+      };
+
+      # stylix does have an icon target -- it feeds the qt and gnome targets and
+      # is what puts a real icon theme behind file dialogs and the tray. The
+      # theme picks the package; both entries are the same name because the
+      # themes here are all dark.
+      icons = {
+        enable = true;
+        package = cfg.active.icons.package;
+        dark = cfg.active.icons.name;
+        light = cfg.active.icons.name;
+      };
     };
   };
 }

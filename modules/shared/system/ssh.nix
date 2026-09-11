@@ -12,7 +12,7 @@ with lib; {
       {
         enable = true;
       }
-      // lib.optionalAttrs pkgs.stdenv.isLinux {
+      // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         ports = [44906];
         settings = {
           PasswordAuthentication = false;
@@ -48,7 +48,7 @@ with lib; {
             IdentitiesOnly yes
         '';
       }
-      // lib.optionalAttrs pkgs.stdenv.isLinux {
+      // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         startAgent = true;
       };
   };

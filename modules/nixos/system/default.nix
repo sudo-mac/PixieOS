@@ -17,11 +17,11 @@
         ./roblox.nix
         ./asus.nix
         ./bootloader.nix
+        ./greeter/regreet.nix
         ./virtualisation.nix
         ./libreoffice.nix
         ./qflipper.nix
         ./screen.nix
-        ./yazi.nix
         ./rustdesk.nix
         ./rustdesk-secrets.nix
         ./pokemmo.nix
@@ -84,7 +84,6 @@
         appimage-run
         bat
         brightnessctl
-        btop
         curl
         exfatprogs
         fastfetch
@@ -118,7 +117,6 @@
         superfile
         tigervnc
         tree
-        ungoogled-chromium
         unzip
         weathr
         wget

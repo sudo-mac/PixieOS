@@ -18,15 +18,15 @@ in
       enable = true;
 
       settings = {
-        # Geometry and behaviour are functional and stay here.
+        # Size and behaviour are functional and stay here; where the popup sits
+        # is the theme's call (it has to clear the bar), so origin/offset come
+        # in with style.global below.
         global = {
           monitor = 0;
           follow = "mouse";
 
           width = "(280,400)";
           height = 300;
-          origin = "top-right";
-          offset = "16x50";
           scale = 0;
           notification_limit = 5;
 

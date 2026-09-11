@@ -87,7 +87,7 @@
         lsp.enable = true;
       };
     }
-    // lib.optionalAttrs pkgs.stdenv.isLinux {
+    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       csharp = {
         enable = true;
         lsp.enable = true;
