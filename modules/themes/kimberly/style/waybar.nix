@@ -30,14 +30,20 @@ let
   # lying on the wallpaper rather than a strip that has been cut into thirds.
   lift = 4;
 
-  # The corner the islands are cut to. Rounder than `radius.card`, and stated
-  # here rather than by raising that token, because the token is also the corner
-  # on the tooltip, the wlogout tiles and the hyprlock card -- all of them large
-  # surfaces, where 12px reads as generous. On a 44px-tall island it reads as a
-  # rectangle with the corners filed off. 18 is most of the way to the 22 that
-  # would make it a capsule, which is the point: a sticker is die-cut round, not
-  # rolled into a pill.
-  corner = radius.card + 6;
+  # The corner the islands are cut to -- the same one hyprland cuts a window to,
+  # which is the whole of why it is `radius.window` and not a number of its own.
+  #
+  # It was `radius.card + 6` (18px), argued for as "a sticker is die-cut round,
+  # not rolled into a pill". The flaw in that argument is that an island is
+  # never read on its own: it sits 10px above a tiled window wearing the same
+  # 2px keyline and the same contact shadow, so the two corners are side by side
+  # on every screen and the eye takes them as one family or as a mistake. At 18
+  # against 6 it was a mistake -- the bar read as a different theme's bar pasted
+  # over this one.
+  #
+  # So the island borrows the window's corner rather than restating it, and a
+  # theme that later wants blunter windows gets a blunter bar for free.
+  corner = radius.window;
 
   # The island's contact shadow: the same one the windows sit on, in the scale a
   # 40px-tall panel can wear.

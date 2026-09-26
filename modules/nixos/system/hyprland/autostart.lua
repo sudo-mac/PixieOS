@@ -1,5 +1,4 @@
 hl.on("hyprland.start", function()
-	hl.exec_cmd("kitty")
 	hl.exec_cmd("nm-applet --indicator")
 	hl.exec_cmd("waybar & dunst")
 	hl.exec_cmd("wallpaper-daemon")
