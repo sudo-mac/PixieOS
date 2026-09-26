@@ -5,6 +5,11 @@
     asus.enable = true;
     graphics.nvidia.enable = true;
     hyprland.enable = true;
+
+    # The login screen lives on the laptop panel, whatever else is plugged in.
+    # Same output monitors.lua puts at 0x0.
+    greeter.output = "eDP-1";
+
     ssh.enable = true;
     virtualisation.enable = true;
     libreoffice.enable = true;

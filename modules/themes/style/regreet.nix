@@ -16,14 +16,20 @@ let
     ;
 in
 {
-  # Contain, not Cover. regreet runs under `cage`, and with a second output
-  # attached the surface it draws into can be wider than any one monitor -- Cover
-  # then upscales a 1920x1080 image to span it and crops the middle out, which is
-  # why the login screen looked zoomed in. On a single 16:9 output the two fits
-  # are identical, so this costs nothing there.
+  # Cover. The greeter gets one output to itself (alienix.system.greeter.output,
+  # see nixos/system/greeter/regreet.nix), so the surface regreet draws into is
+  # a single monitor and Cover is what fills it without letterboxing.
+  #
+  # It was Contain, for the compositor this replaced: cage glues every connected
+  # output into one surface, so with a second monitor attached Cover was
+  # upscaling a 1920x1080 image to span 3280 pixels and cropping the middle out.
+  # Contain stopped the zoom but not the real problem, which was that the image
+  # was centred in a canvas whose centre is the seam between the two screens.
+  # Confining the greeter is what actually fixed that, and it also takes away
+  # the reason Contain was here.
   background = {
     path = toString wallpaper;
-    fit = "Contain";
+    fit = "Cover";
   };
 
   css = ''
