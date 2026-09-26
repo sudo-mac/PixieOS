@@ -14,6 +14,7 @@ in
     ./cpu.nix
     ./tray.nix
     ./battery.nix
+    ./bluetooth.nix
     ./clock.nix
     ./pulseaudio.nix
     ./workspaces.nix
@@ -46,7 +47,7 @@ in
 
           modules-center = [ "clock" "mpris" "custom/media-popup" ];
 
-          modules-right = [ "cpu" "network" "pulseaudio" "battery" "tray" "custom/power" ];
+          modules-right = [ "cpu" "network" "bluetooth" "pulseaudio" "battery" "tray" "custom/power" ];
 
           # A music glyph, not an empty string. The format was "" -- the module
           # drew nothing at all while still taking its padding, so the control

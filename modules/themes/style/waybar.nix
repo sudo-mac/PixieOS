@@ -57,6 +57,7 @@ in
     #cpu,
     #tray,
     #pulseaudio,
+    #bluetooth,
     #custom-power,
     #battery,
     #network,
@@ -76,6 +77,18 @@ in
     #mpris {
       color: @${c.slotOf "ok"};
       margin-right: 0;
+    }
+
+    /* An adapter that is off or blocked is still worth a mark -- it is the
+       answer to "why is nothing pairing" -- but it is not news, so it drops
+       back to the muted foreground instead of taking the accent. */
+    #bluetooth.disabled,
+    #bluetooth.off {
+      color: alpha(@base04, 0.8);
+    }
+
+    #bluetooth.connected {
+      color: @${c.slotOf "info"};
     }
 
     #custom-media-popup {
