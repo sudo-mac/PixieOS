@@ -193,6 +193,7 @@ shared
     #cpu,
     #tray,
     #pulseaudio,
+    #bluetooth,
     #custom-power,
     #battery,
     #network,
@@ -237,6 +238,22 @@ shared
 
     #pulseaudio {
       color: ${c.accentHex "info"};
+    }
+
+    /* Idle takes the neutral foreground like the signal glyph next to it; the
+       accent is spent on the state that means something is actually paired and
+       talking, and the off/blocked state drops below both. */
+    #bluetooth {
+      color: @base05;
+    }
+
+    #bluetooth.connected {
+      color: ${c.accentHex "primary"};
+    }
+
+    #bluetooth.disabled,
+    #bluetooth.off {
+      color: alpha(@base05, 0.45);
     }
 
     #battery {

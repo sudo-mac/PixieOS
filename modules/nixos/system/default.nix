@@ -58,6 +58,18 @@
             General = {
                 AutoEnable = true;
                 FastConnectable = true;
+                # Start the adapter bondable. Without this, a session tool that
+                # flips Pairable off leaves it off (bluetoothd persists adapter
+                # state), and the kernel then refuses to create a bond: a
+                # DualSense "connects" but never gets an HID device, so no game
+                # or Steam ever sees a gamepad.
+                AlwaysPairable = true;
+
+                # bluez publishes a connected device's charge level on its
+                # Battery1 interface, which sits behind this flag. Without it
+                # the bar's bluetooth tooltip can name a connected DualSense
+                # or a pair of headphones but never say what is left in it.
+                Experimental = true;
             };
         };
     };
