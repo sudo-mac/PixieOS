@@ -39,6 +39,19 @@ in
 
       border-color: @edge;
       background-color: @base00;
+      /* The `*` block's `text-color: inherit` has nothing to inherit from at
+         the window, so without this rofi falls back to its built-in black.
+         The launcher never showed it -- entry, prompt and element all set
+         their own colour -- but the error dialog (a mistyped command in run
+         mode, say) is just window > error-message > textbox, all inheriting,
+         and came out near-black on @base00. */
+      text-color: @base05;
+    }
+
+    error-message {
+      background-color: @base00;
+      text-color: @base05;
+      padding: 4px;
     }
 
     mainbox {
