@@ -4,6 +4,26 @@ let
   theme = config.alienix.theme.active;
 in
 {
+  # The kde target below points every KDE app at a colour scheme generated from
+  # the palette (UiSettings.ColorScheme in kdeglobals), and installs the
+  # .colors file into the user profile. But the per-user profile only links the
+  # subdirs named here, and share/color-schemes is only a default under Plasma.
+  # Without it dolphin, ark and friends could not find the scheme and fell back
+  # to Breeze Light's built-in colours -- near-black text drawn on the dark
+  # Kvantum background.
+  environment = {
+    pathsToLink = mkIf config.nixpkgs.hostPlatform.isLinux [ "/share/color-schemes" ];
+  }
+  // optionalAttrs config.nixpkgs.hostPlatform.isLinux {
+    # That UiSettings.ColorScheme line lives in a kdeglobals stylix ships as its
+    # own store path, added to XDG_CONFIG_DIRS through home-manager's session
+    # variables. Those only reach login shells and systemd's environment.d --
+    # the plain Hyprland session greetd starts reads neither, so anything
+    # launched from a keybind or rofi never saw the file and the scheme above
+    # was never selected. PAM's session environment does reach it.
+    sessionVariables.XDG_CONFIG_DIRS = mkBefore config.home-manager.users.dex.xdg.systemDirs.config;
+  };
+
   # The palette, wallpaper and fonts come from the active theme
   # (modules/themes). This file only decides which stylix targets are allowed
   # to act on them.
