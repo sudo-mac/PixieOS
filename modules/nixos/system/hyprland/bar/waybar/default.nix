@@ -8,6 +8,14 @@ with lib;
 let
   theme = config.alienix.theme.active;
   inherit (theme.tokens) layout;
+
+  margin =
+    (theme.style.waybar theme).margin or {
+      top = if layout.bar.position == "top" then layout.bar.margin else 0;
+      bottom = if layout.bar.position == "bottom" then layout.bar.margin else 0;
+      left = layout.bar.margin;
+      right = layout.bar.margin;
+    };
 in
 {
   imports = [
@@ -38,10 +46,13 @@ in
           # An island bar is a transparent strip with three filled groups sitting
           # in it, so it has to be inset from the screen edge; a continuous bar
           # spans the full width and sits flush.
-          margin-top = if layout.bar.position == "top" then layout.bar.margin else 0;
-          margin-bottom = if layout.bar.position == "bottom" then layout.bar.margin else 0;
-          margin-left = layout.bar.margin;
-          margin-right = layout.bar.margin;
+          # A bar style can state its own per-side margins when its painted
+          # edge is not the edge of its surface (kimberly's islands carry their
+          # shadow room inside it).
+          margin-top = margin.top;
+          margin-bottom = margin.bottom;
+          margin-left = margin.left;
+          margin-right = margin.right;
 
           modules-left = [ "hyprland/workspaces" "hyprland/window" ];
 

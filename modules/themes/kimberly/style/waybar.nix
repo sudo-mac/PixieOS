@@ -19,16 +19,13 @@ let
     opacity
     layout
     shadow
+    gaps
     ;
 
   shared = import ../../style/waybar.nix args;
 
   keyline = c.accentHex "primary"; # coral-rose
   keylineHi = c.accentHex "secondary"; # hot pink
-
-  # Breathing room above and below each island, so they read as three objects
-  # lying on the wallpaper rather than a strip that has been cut into thirds.
-  lift = 4;
 
   # The corner the islands are cut to -- the same one hyprland cuts a window to,
   # which is the whole of why it is `radius.window` and not a number of its own.
@@ -102,7 +99,22 @@ let
     side = cast.blur;
   };
 
-  strip = layout.bar.height + (2 * border.width) + (2 * lift) + reach.above + reach.below;
+  strip = layout.bar.height + (2 * border.width) + reach.above + reach.below;
+
+  # The islands sit exactly where a tiled window would: `gaps.outer` in from
+  # every screen edge they face, and `gaps.outer` above the windows below them.
+  # The only thing between a keyline and the edge of the layer surface is the
+  # room its shadow needs (`reach`), so the surface's own margin is the gap less
+  # that.
+  #
+  # There used to be a 4px lift above and below every island on top of the
+  # shadow room and the full bar margin, plus the shadow inset again at the
+  # outer sides. Together they put the keylines 18px from the top, 16px from
+  # the sides and 22px above the windows, against hyprland's 10 everywhere.
+  onTop = layout.bar.position == "top";
+  outward = if onTop then reach.above else reach.below;
+  inward = if onTop then reach.below else reach.above;
+  inset = n: if n > gaps.outer then 0 else gaps.outer - n;
 
   # A sticker: flat fill, a keyline, and the shadow it sits above.
   sticker = ''
@@ -115,6 +127,19 @@ let
 in
 shared
 // {
+  # Read by bar/waybar/default.nix in place of the flat `layout.bar.margin`.
+  margin = {
+    top = if onTop then inset outward else 0;
+    bottom = if onTop then 0 else inset outward;
+    left = inset reach.side;
+    right = inset reach.side;
+  };
+
+  # Reserved but unpainted surface between the islands and the windows. Left
+  # alone, hyprland would add a full `gaps.outer` past it; style/hyprland.nix
+  # takes this off that edge's gap instead.
+  overhang = inward;
+
   # The palette preamble is emitted here rather than leaned on from stylix's
   # waybar target: home-manager concatenates the two stylesheets in an order
   # nothing guarantees, and stylix's half is switched off anyway (see
@@ -166,12 +191,11 @@ shared
          needs above the island is not the clearance it needs below. Spending
          the larger number on both sides would reserve screen the shadow never
          reaches into. */
-      margin: ${toString (lift + reach.above)}px ${toString (8 + reach.side)}px ${toString (lift + reach.below)}px;
+      margin: ${toString reach.above}px ${toString (8 + reach.side)}px ${toString reach.below}px;
     }
 
-    /* The outer two already sit `layout.bar.margin` in from the screen edge --
-       waybar's own margin-left/right does that -- so they don't need a second
-       inset on that side, only room for the shadow itself.
+    /* The outer two take only room for the shadow on the screen side; waybar's
+       own margin (see `margin` above) makes up the rest of `gaps.outer`.
 
        No width floor here either. 300px was picked to match the widest the
        window title could get, which made the island a fixed slab that was

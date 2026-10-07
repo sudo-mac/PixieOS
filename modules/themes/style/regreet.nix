@@ -28,7 +28,9 @@ in
   # Confining the greeter is what actually fixed that, and it also takes away
   # the reason Contain was here.
   background = {
-    path = toString wallpaper;
+    # Interpolated, not toString: toString gives a context-free path into the
+    # flake source, which nothing keeps alive -- the GC deleted it.
+    path = "${wallpaper}";
     fit = "Cover";
   };
 

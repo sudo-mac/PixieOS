@@ -8,13 +8,15 @@ with lib; {
 
   config = mkIf config.alienix.system.ssd.enable {
     fileSystems."/mnt/e-Garage" = {
-      device = "/dev/disk/by-uuid/68E9-5E19";
+      device = "/dev/disk/by-label/e-Garage";
       fsType = "exfat";
       options = [
         "uid=1000"
         "gid=100"
         "nofail"
         "auto"
+        "x-systemd.automount"
+        "x-systemd.device-timeout=5s"
       ];
     };
   };
