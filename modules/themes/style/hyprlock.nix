@@ -23,7 +23,9 @@ in
   # match keeps the silhouette and the spray-can colours legible while still
   # dropping a good stop below the foreground text.
   background = {
-    path = toString wallpaper;
+    # Interpolated, not toString: toString gives a context-free path into the
+    # flake source, which nothing keeps alive -- the GC deleted it.
+    path = "${wallpaper}";
     color = s "base00";
     blur_size = tokens.blur.size;
     blur_passes = tokens.blur.passes;

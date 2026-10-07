@@ -1,7 +1,14 @@
 # Presentation for the compositor itself. Emits the bodies of the generated
 # appearance.lua / animations.lua, so the border gradient, rounding, blur and
 # opacities come from tokens rather than hand-copied hex literals.
-{ tokens, cursor, c, ... }:
+{
+  tokens,
+  cursor,
+  c,
+  components,
+  style,
+  ...
+}@theme:
 let
   inherit (tokens)
     radius
@@ -290,13 +297,27 @@ let
 
   # A leaf's duration: the family's table, scaled by its rate.
   d = leaf: f durations.${leaf};
+
+  # The outer gap on the bar's edge is shortened by however much invisible
+  # surface the bar reserves past its painted edge, so the windows sit
+  # `gaps.outer` below the bar's islands rather than below the bottom of its
+  # layer surface. A bar style that reserves nothing (the shared continuous
+  # strip) leaves `gaps_out` the single number it always was.
+  overhang = if components.bar == "waybar" then (style.waybar theme).overhang or 0 else 0;
+  barGap = if overhang > gaps.outer then 0 else gaps.outer - overhang;
+  outerGap = side: if side == layout.bar.position then barGap else gaps.outer;
+  gapsOut =
+    if overhang == 0 then
+      toString gaps.outer
+    else
+      "{ top = ${toString (outerGap "top")}, right = ${toString (outerGap "right")}, bottom = ${toString (outerGap "bottom")}, left = ${toString (outerGap "left")} }";
 in
 {
   appearance = ''
     hl.config({
     	general = {
     		gaps_in = ${toString gaps.inner},
-    		gaps_out = ${toString gaps.outer},
+    		gaps_out = ${gapsOut},
     		border_size = ${toString border.width},
     		resize_on_border = true,
     		allow_tearing = false,
