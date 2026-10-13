@@ -14,6 +14,27 @@ let
   greeter = config.services.displayManager.regreet.package;
   hyprland = config.programs.hyprland.package;
 
+  # The only session the greeter offers. The hyprland package ships two entries,
+  # plain and uwsm-managed, and logging into the plain one meant
+  # graphical-session.target never started -- so xdg-desktop-portal (Requisite
+  # on it) never ran and Chromium, Electron and libadwaita apps never heard the
+  # theme's dark preference. The packaged uwsm entry can't simply be kept on its
+  # own: it names hyprland.desktop by entry ID, which uwsm then has to find in
+  # the very directory the plain entry is being dropped from. Handing uwsm the
+  # binary path instead needs no lookup. -e -D keeps XDG_CURRENT_DESKTOP at
+  # exactly "Hyprland", which the xdg.portal config is keyed on.
+  session = pkgs.writeTextFile {
+    name = "hyprland-uwsm-session";
+    destination = "/share/wayland-sessions/hyprland-uwsm.desktop";
+    text = ''
+      [Desktop Entry]
+      Name=Hyprland
+      Comment=Hyprland, managed by uwsm
+      Exec=${getExe config.programs.uwsm.package} start -e -D Hyprland -N Hyprland -- ${hyprland}/bin/start-hyprland
+      Type=Application
+    '';
+  };
+
   # "This output and nothing else." The catch-all has to come first: hyprland
   # applies monitor rules in order and the last one that matches a given output
   # is the one that sticks, so the named rule reads as an exception to it.
@@ -23,58 +44,68 @@ let
   # config has never heard of cannot move the login screen.
   monitorRules =
     if cfg.output == null then
-      "monitor = , preferred, auto, 1"
+      ''
+        hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
+      ''
     else
       ''
-        monitor = , disable
-        monitor = ${cfg.output}, preferred, 0x0, 1
+        hl.monitor({ output = "", disabled = true })
+        hl.monitor({ output = "${cfg.output}", mode = "preferred", position = "0x0", scale = 1 })
       '';
 
   # The greeter's compositor. Everything decorative is off: the greeter is the
   # only client that will ever connect, it is a single tiled window, and with
   # gaps, borders and rounding at zero that window is exactly the output.
-  greeterConf = pkgs.writeText "greeter-hyprland.conf" ''
+  #
+  # Lua, like the session's own config: hyprland 0.56 still reads the hyprlang
+  # .conf format, but paints a deprecation notice over the screen when it does
+  # -- which on the login screen sat on top of the greeter. It picks the parser
+  # by file extension, hence the name.
+  greeterConf = pkgs.writeText "greeter-hyprland.lua" ''
     ${monitorRules}
+    hl.config({
+    	general = {
+    		gaps_in = 0,
+    		gaps_out = 0,
+    		border_size = 0,
+    	},
 
-    general {
-      gaps_in = 0
-      gaps_out = 0
-      border_size = 0
-    }
+    	decoration = {
+    		rounding = 0,
 
-    decoration {
-      rounding = 0
+    		blur = {
+    			enabled = false,
+    		},
 
-      blur {
-        enabled = false
-      }
+    		shadow = {
+    			enabled = false,
+    		},
+    	},
 
-      shadow {
-        enabled = false
-      }
-    }
+    	animations = {
+    		enabled = false,
+    	},
 
-    animations {
-      enabled = false
-    }
+    	misc = {
+    		-- Otherwise the half-second before regreet maps its window is hyprland's
+    		-- own wallpaper and logo, which is not this theme.
+    		disable_hyprland_logo = true,
+    		disable_splash_rendering = true,
+    		force_default_wallpaper = 0,
 
-    misc {
-      # Otherwise the half-second before regreet maps its window is hyprland's
-      # own wallpaper and logo, which is not this theme.
-      disable_hyprland_logo = true
-      disable_splash_rendering = true
-      force_default_wallpaper = 0
+    		background_color = "rgb(${theme.palette.base00})",
+    	},
+    })
 
-      background_color = rgb(${theme.palette.base00})
-    }
+    hl.env("XCURSOR_THEME", "${theme.cursor.name}")
+    hl.env("XCURSOR_SIZE", "${toString theme.cursor.size}")
 
-    env = XCURSOR_THEME,${theme.cursor.name}
-    env = XCURSOR_SIZE,${toString theme.cursor.size}
-
-    # greetd kills the compositor itself once a session starts, so this only
-    # matters on the paths that end without one -- reboot, poweroff, or regreet
-    # falling over -- where without it hyprland would sit on an empty screen.
-    exec-once = ${getExe greeter}; ${hyprland}/bin/hyprctl dispatch exit
+    -- greetd kills the compositor itself once a session starts, so this only
+    -- matters on the paths that end without one -- reboot, poweroff, or regreet
+    -- falling over -- where without it hyprland would sit on an empty screen.
+    hl.on("hyprland.start", function()
+    	hl.exec_cmd("${getExe greeter}; ${hyprland}/bin/hyprctl dispatch 'hl.dsp.exit()'")
+    end)
   '';
 in
 {
@@ -101,13 +132,14 @@ in
     stylix.targets.regreet.enable = false;
 
     # regreet discovers sessions by scanning share/wayland-sessions on
-    # XDG_DATA_DIRS, and nothing was putting hyprland.desktop there --
+    # XDG_DATA_DIRS, and nothing was putting a session there --
     # programs.hyprland only registers the session with
     # services.displayManager.sessionPackages, which the greeter never reads.
     # Without this the greeter comes up with an empty session list and there is
-    # nothing to log into.
+    # nothing to log into. Only the uwsm session above goes in, not
+    # sessionData.desktops, so the plain one is never on offer.
     environment = {
-      systemPackages = [ config.services.displayManager.sessionData.desktops ];
+      systemPackages = [ session ];
 
       # systemPackages alone is not enough: system-path only links the subdirs
       # named here, and share/wayland-sessions is not one of the defaults.
@@ -115,6 +147,14 @@ in
         "/share/wayland-sessions"
         "/share/xsessions"
       ];
+
+      # The hyprland package is in systemPackages too, so linking the directory
+      # above brings its own two entries along with ours. Ours is named
+      # hyprland-uwsm.desktop and so wins that collision; the plain one has to
+      # be taken out by hand.
+      extraSetup = ''
+        rm -f $out/share/wayland-sessions/hyprland.desktop
+      '';
     };
 
     # hyprland in place of cage, which is what the regreet module reaches for by
@@ -130,9 +170,12 @@ in
     # external monitor, not the laptop.
     #
     # hyprland is already in the closure for the session, so this costs nothing
-    # to add, and `monitor =` says exactly which screen the login screen is on.
+    # to add, and `hl.monitor` says exactly which screen the login screen is on.
+    #
+    # Through start-hyprland, the watchdog wrapper: started bare, hyprland 0.56
+    # paints a "started without start-hyprland" warning over the greeter.
     services.greetd.settings.default_session.command =
-      "${pkgs.dbus}/bin/dbus-run-session ${hyprland}/bin/Hyprland --config ${greeterConf}";
+      "${pkgs.dbus}/bin/dbus-run-session ${hyprland}/bin/start-hyprland -- --config ${greeterConf}";
 
     services.displayManager.regreet = {
       enable = true;
