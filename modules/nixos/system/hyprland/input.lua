@@ -33,6 +33,14 @@ hl.config({
 			natural_scroll = false,
 		},
 	},
+
+	-- Software cursors. On nvidia the hardware cursor plane garbles
+	-- app-supplied pixmap cursors (FreeCAD's sketcher crosshairs, any Qt
+	-- QCursor(pixmap)); theme cursors were fine, so it only showed up there.
+	-- https://github.com/hyprwm/Hyprland/issues/16413
+	cursor = {
+		no_hardware_cursors = true,
+	},
 })
 
 hl.gesture({
