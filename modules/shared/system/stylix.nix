@@ -40,6 +40,14 @@ in
   // optionalAttrs config.nixpkgs.hostPlatform.isLinux {
     users.dex.config = {
       home.pointerCursor.enable = true;
+
+      # stylix always names the light adw-gtk3 variant. Its palette overrides
+      # cover most widgets, but the light variant hardcodes near-black text on
+      # some -- message dialog buttons ("file already exists: Cancel/Replace")
+      # rendered dark-on-dark and were unreadable. The dark variant ships the
+      # matching hardcoded values.
+      gtk.theme.name = mkForce (if theme.meta.polarity == "dark" then "adw-gtk3-dark" else "adw-gtk3");
+
       stylix = {
         cursor = {
           inherit (theme.cursor) package name size;
