@@ -21,5 +21,6 @@
         fastfetch
         onefetch
         obsidian
+        android-studio
     ];
 }
