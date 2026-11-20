@@ -14,6 +14,7 @@
     virtualisation.enable = true;
     libreoffice.enable = true;
     nextcloud.enable = false;
+    syncthing.enable = true; # OurVault, shared with Ashley
     ssd.enable = true;
 
     gaming = {

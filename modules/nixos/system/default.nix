@@ -10,6 +10,7 @@
         ./nvidia.nix
         ./time-and-date.nix
         ./nextcloud.nix
+        ./syncthing.nix
         ./audio.nix
         ./graphics.nix
         ./gaming.nix
