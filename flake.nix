@@ -81,7 +81,7 @@
                 useUserPackages = true;
                 backupFileExtension = "backup";
                 sharedModules = [
-                  nvf.homeManagerModules.default
+                  nvf.homeModules.default
                   nixcord.homeModules.nixcord
                 ];
                 extraSpecialArgs = { inherit inputs; };
@@ -114,7 +114,7 @@
               useUserPackages = true;
               backupFileExtension = "backup";
               sharedModules = [
-                nvf.homeManagerModules.default
+                nvf.homeModules.default
                 # nixcord.homeModules.nixcord
               ];
               extraSpecialArgs = { inherit inputs; };
