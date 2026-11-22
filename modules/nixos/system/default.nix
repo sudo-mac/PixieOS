@@ -11,6 +11,7 @@
         ./time-and-date.nix
         ./nextcloud.nix
         ./syncthing.nix
+        ./vault-dashboard.nix
         ./audio.nix
         ./graphics.nix
         ./gaming.nix

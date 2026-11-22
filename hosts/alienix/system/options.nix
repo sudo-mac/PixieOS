@@ -15,6 +15,7 @@
     libreoffice.enable = true;
     nextcloud.enable = false;
     syncthing.enable = true; # OurVault, shared with Ashley
+    vault-dashboard.enable = true; # OurVault on the TV: http://alienix:8088
     ssd.enable = true;
 
     gaming = {
