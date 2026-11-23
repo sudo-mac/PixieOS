@@ -12,6 +12,7 @@
         ./nextcloud.nix
         ./syncthing.nix
         ./vault-dashboard.nix
+        ./ebay-sync.nix
         ./audio.nix
         ./graphics.nix
         ./gaming.nix

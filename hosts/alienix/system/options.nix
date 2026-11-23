@@ -15,7 +15,9 @@
     libreoffice.enable = true;
     nextcloud.enable = false;
     syncthing.enable = true; # OurVault, shared with Ashley
-    vault-dashboard.enable = true; # OurVault on the TV: http://alienix:8088
+    vault-dashboard.enable = true; # Mashley's Dashboard (OurVault): http://alienix:8088
+    lifevault-dashboard.enable = true; # LifeVault dashboard: http://alienix:8090
+    ebay-sync.enable = true; # hourly eBay numbers into LifeVault + OurVault (~/Projects/ebay-sync)
     ssd.enable = true;
 
     gaming = {
