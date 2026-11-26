@@ -6,8 +6,8 @@
 with lib; {
   options = { alienix.system.syncthing.enable = mkEnableOption "Enable Syncthing"; };
 
-  # Keeps OurVault (the Obsidian vault shared with Ashley) in sync between
-  # this laptop and her computer. Each side has a full copy; changes sync
+  # Keeps OurVault (the Obsidian vault shared with Ashley) and AshleyVault
+  # (her own private vault) in sync between this laptop and her computer. Each side has a full copy; changes sync
   # whenever both are online, over the LAN or through Syncthing's relays.
   config = mkIf config.alienix.system.syncthing.enable {
     services.syncthing = {
@@ -32,6 +32,16 @@ with lib; {
           path = "/home/dex/OurVault";
           # Keep old versions of changed/deleted notes for 30 days, in
           # OurVault/.stversions, in case one of us overwrites the other.
+          versioning = {
+            type = "staggered";
+            params.maxAge = toString (30 * 24 * 60 * 60);
+          };
+        };
+        # Ashley's own vault. Shared ONLY with her device (done from the web UI /
+        # REST API, like OurVault). Her copy: Documents\AshleyVault.
+        folders.ashleyvault = {
+          label = "AshleyVault";
+          path = "/home/dex/AshleyVault";
           versioning = {
             type = "staggered";
             params.maxAge = toString (30 * 24 * 60 * 60);

@@ -9,7 +9,7 @@ with lib; {
 
   # Pulls SpooferDex's eBay numbers (orders, balance, payouts, listings, views)
   # with eBay's read-only seller APIs and rewrites one note in each vault:
-  #   LifeVault: /mnt/e-Garage/LifeVault/01 - SpooferDex/eBay Live.md (skipped when the drive is out)
+  #   LifeVault: ~/LifeVault/01 - SpooferDex/eBay Live.md (phone costs need the e-Garage drive)
   #   OurVault:  ~/OurVault/01 - Home/SpooferDex eBay.md
   # Code: ~/Projects/ebay-sync. Secrets: ~/.config/ebay-sync (one-time `ebay_sync.py --login`).
   config = mkIf config.alienix.system.ebay-sync.enable {
@@ -27,12 +27,11 @@ with lib; {
         TimeoutStartSec = "5min";
 
         # Read-only everywhere, except the two vaults and its own token cache.
-        # "-" = fine if missing (the e-Garage drive isn't always plugged in).
         ProtectSystem = "strict";
         ProtectHome = "read-only";
         ReadWritePaths = [
           "/home/dex/OurVault"
-          "-/mnt/e-Garage/LifeVault"
+          "/home/dex/LifeVault"
           "/home/dex/.config/ebay-sync"
         ];
         PrivateTmp = true;

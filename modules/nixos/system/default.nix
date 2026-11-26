@@ -13,6 +13,7 @@
         ./syncthing.nix
         ./vault-dashboard.nix
         ./ebay-sync.nix
+        ./vault-backup.nix
         ./audio.nix
         ./graphics.nix
         ./gaming.nix

@@ -7,32 +7,33 @@
 with lib; let
   fontDir = "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype/NerdFonts/JetBrainsMono";
 
-  # One web server per vault. The script re-reads the vault on every page load,
-  # so edits in Obsidian show up straight away, and it restarts itself when its
-  # own code changes. It only answers home-network IPs. `writable` lets it save
-  # into that one vault (ticking boxes / adding items from the TV); otherwise
-  # it can only read.
+  # One web server per vault, all from one codebase (~/Projects/vault-dashboards,
+  # `run.py --site <name>`). Each page re-reads the vault, so edits in Obsidian
+  # show up straight away, and it restarts itself when its code changes. It only
+  # answers home-network IPs. Each one can edit its own vault (tick, add, full
+  # note editing, new/rename/move/archive/trash) and nothing else.
+  code = "/home/dex/Projects/vault-dashboards/run.py";
   mkDashboard = {
     description,
-    code,
+    site,
     vault,
     port,
-    writable ? false,
   }: {
     inherit description;
     wantedBy = ["multi-user.target"];
     after = ["network.target"];
+    environment.PYTHONDONTWRITEBYTECODE = "1";
     serviceConfig = {
       User = "dex";
       Group = "users";
-      ExecStart = "${pkgs.python3}/bin/python3 ${code} --vault ${vault} --port ${toString port} --font-dir ${fontDir}";
+      ExecStart = "${pkgs.python3}/bin/python3 ${code} --site ${site} --vault ${vault} --port ${toString port} --font-dir ${fontDir}";
       Restart = "always";
       RestartSec = 5;
 
-      # Read-only everywhere, except its own vault when writable.
+      # Read-only everywhere, except its own vault.
       ProtectSystem = "strict";
       ProtectHome = "read-only";
-      ReadWritePaths = optional writable vault;
+      ReadWritePaths = [vault];
       PrivateTmp = true;
       NoNewPrivileges = true;
     };
@@ -41,21 +42,23 @@ in {
   options = {
     alienix.system.vault-dashboard.enable = mkEnableOption "Enable Mashley's Dashboard (OurVault, port 8088)";
     alienix.system.lifevault-dashboard.enable = mkEnableOption "Enable the LifeVault dashboard (port 8090)";
+    alienix.system.ashley-dashboard.enable = mkEnableOption "Enable Ashley's dashboard (AshleyVault, port 8092)";
   };
 
-  # TV-friendly web views of the vaults, for any browser on the home network:
-  #   Mashley's Dashboard: OurVault, shared with Ashley. Neon (Cybergirl palette).
-  #     http://alienix:8088  -- code: ~/Projects/vault-dashboard
-  #   LifeVault: Matthew's own vault (needs the e-Garage drive). Kimberly theme.
-  #     http://alienix:8090  -- code: ~/Projects/lifevault-dashboard
+  # Web views of the three vaults, for any browser on the home network:
+  #   Mashley's Dashboard: OurVault, shared with Ashley. Neon (Cybergirl), made for the TV.
+  #     http://alienix:8088
+  #   LifeVault: Matthew's own vault (~/LifeVault). Kimberly theme, tablet first.
+  #     http://alienix:8090
+  #   Ashley's Dashboard: Ashley's own vault (~/AshleyVault). Soft light/dark look. No lock.
+  #     http://alienix:8092
   config = mkMerge [
     (mkIf config.alienix.system.vault-dashboard.enable {
       systemd.services.vault-dashboard = mkDashboard {
         description = "Mashley's Dashboard (OurVault)";
-        code = "/home/dex/Projects/vault-dashboard/dashboard.py";
+        site = "mashley";
         vault = "/home/dex/OurVault";
         port = 8088;
-        writable = true; # tick / add from the TV
       };
       networking.firewall.allowedTCPPorts = [8088];
     })
@@ -63,11 +66,21 @@ in {
     (mkIf config.alienix.system.lifevault-dashboard.enable {
       systemd.services.lifevault-dashboard = mkDashboard {
         description = "LifeVault dashboard";
-        code = "/home/dex/Projects/lifevault-dashboard/dashboard.py";
-        vault = "/mnt/e-Garage/LifeVault";
+        site = "lifevault";
+        vault = "/home/dex/LifeVault";
         port = 8090;
       };
       networking.firewall.allowedTCPPorts = [8090];
+    })
+
+    (mkIf config.alienix.system.ashley-dashboard.enable {
+      systemd.services.ashley-dashboard = mkDashboard {
+        description = "Ashley's dashboard (AshleyVault)";
+        site = "ashley";
+        vault = "/home/dex/AshleyVault";
+        port = 8092;
+      };
+      networking.firewall.allowedTCPPorts = [8092];
     })
   ];
 }
