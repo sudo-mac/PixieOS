@@ -35,7 +35,17 @@ in
     # evaluation. It goes through sharedModules because it has to reach the
     # darwin profile too, which never configures rofi at all but still got the
     # warning.
-    sharedModules = [ { stylix.targets.rofi.enable = false; } ];
+    #
+    # wayprompt: home-manager removed `programs.wayprompt` (nixpkgs dropped the
+    # package) and now asserts if anything defines it. The pinned stylix still
+    # ships a wayprompt target that sets programs.wayprompt.settings, so it has
+    # to be off until stylix drops that target.
+    sharedModules = [
+      {
+        stylix.targets.rofi.enable = false;
+        stylix.targets.wayprompt.enable = false;
+      }
+    ];
   }
   // optionalAttrs config.nixpkgs.hostPlatform.isLinux {
     users.dex.config = {
