@@ -1,123 +1,129 @@
 {
-  pkgs,
-  lib,
-  config,
-  inputs,
-  ...
+    pkgs,
+    lib,
+    config,
+    inputs,
+    ...
 }:
 with lib;
 {
-  options = {
-    alienix.home.firefox.enable = mkEnableOption "Enable and Configure Firefox";
-  };
+    options = {
+        alienix.home.firefox.enable = mkEnableOption "Enable and Configure Firefox";
+    };
 
-  config = mkMerge [
-    (mkIf config.alienix.home.firefox.enable {
-      programs.librewolf = {
-        enable = true;
-        profiles = {
-          default = {
-            isDefault = true;
-            name = "default";
-            settings = {
-              "browser.theme.content-theme" = 1;
-              "browser.theme.toolbar-theme" = 1;
-              "ui.systemUsesDarkTheme" = 1;
+    config = mkMerge [
+        (mkIf config.alienix.home.firefox.enable {
+            programs.librewolf = {
+                enable = true;
+                profiles = {
+                    default = {
+                        isDefault = true;
+                        name = "default";
+                        settings = {
+                            "browser.theme.content-theme" = 1;
+                            "browser.theme.toolbar-theme" = 1;
+                            "ui.systemUsesDarkTheme" = 1;
+                        };
+
+                        bookmarks = {
+                            force = true;
+                            settings = [
+                                {
+                                    name = "Gmail";
+                                    tags = [ "Email" ];
+                                    keyword = "gmail";
+                                    url = "https://mail.google.com/";
+                                }
+                                {
+                                    name = "Google Drive";
+                                    tags = [ "Cloud" ];
+                                    keyword = "drive";
+                                    url = "https://drive.google.com/";
+                                }
+                                {
+                                    name = "Ebay";
+                                    tags = [ "Shopping" ];
+                                    keyword = "drive";
+                                    url = "https://www.ebay.com/";
+                                }
+                                {
+                                    name = "Claude";
+                                    tags = [ "Artificial Intelligence" ];
+                                    keyword = "GPT";
+                                    url = "https://claude.ai/";
+                                }
+                                {
+                                    name = "GitHub";
+                                    tags = [ "Development" ];
+                                    keyword = "Git";
+                                    url = "https://github.com/";
+                                }
+                                {
+                                    toolbar = true;
+                                    bookmarks = [
+                                        {
+                                            name = "Proton";
+                                            tags = [ "Email" ];
+                                            keyword = "proton";
+                                            url = "https://proton.me/mail";
+                                        }
+                                        {
+                                            name = "Gmail";
+                                            tags = [ "Email" ];
+                                            keyword = "gmail";
+                                            url = "https://mail.google.com/";
+                                        }
+                                        {
+                                            name = "Google Drive";
+                                            tags = [ "Cloud" ];
+                                            keyword = "drive";
+                                            url = "https://drive.google.com/";
+                                        }
+                                        {
+                                            name = "Ebay";
+                                            tags = [ "Shopping" ];
+                                            keyword = "drive";
+                                            url = "https://www.ebay.com/";
+                                        }
+                                        {
+                                            name = "Claude";
+                                            tags = [ "Artificial Intelligence" ];
+                                            keyword = "GPT";
+                                            url = "https://claude.ai/";
+                                        }
+                                        {
+                                            name = "GitHub";
+                                            tags = [ "Development" ];
+                                            keyword = "Git";
+                                            url = "https://github.com/";
+                                        }
+                                    ];
+                                }
+                            ];
+                        };
+                        extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
+                            sponsorblock
+                            bitwarden
+                        ];
+                    };
+                };
             };
+            stylix.targets.librewolf.profileNames = [ "default" ];
+        })
 
-            bookmarks = {
-              force = true;
-              settings = [
-                {
-                  name = "Gmail";
-                  tags = [ "Email" ];
-                  keyword = "gmail";
-                  url = "https://mail.google.com/";
-                }
-                {
-                  name = "Google Drive";
-                  tags = [ "Cloud" ];
-                  keyword = "drive";
-                  url = "https://drive.google.com/";
-                }
-                {
-                  name = "Ebay";
-                  tags = [ "Shopping" ];
-                  keyword = "drive";
-                  url = "https://www.ebay.com/";
-                }
-                {
-                  name = "Claude";
-                  tags = [ "Artificial Intelligence" ];
-                  keyword = "GPT";
-                  url = "https://claude.ai/";
-                }
-                {
-                  name = "GitHub";
-                  tags = [ "Development" ];
-                  keyword = "Git";
-                  url = "https://github.com/";
-                }
-                {
-                  toolbar = true;
-                  bookmarks = [
-                    {
-                      name = "Gmail";
-                      tags = [ "Email" ];
-                      keyword = "gmail";
-                      url = "https://mail.google.com/";
-                    }
-                    {
-                      name = "Google Drive";
-                      tags = [ "Cloud" ];
-                      keyword = "drive";
-                      url = "https://drive.google.com/";
-                    }
-                    {
-                      name = "Ebay";
-                      tags = [ "Shopping" ];
-                      keyword = "drive";
-                      url = "https://www.ebay.com/";
-                    }
-                    {
-                      name = "Claude";
-                      tags = [ "Artificial Intelligence" ];
-                      keyword = "GPT";
-                      url = "https://claude.ai/";
-                    }
-                    {
-                      name = "GitHub";
-                      tags = [ "Development" ];
-                      keyword = "Git";
-                      url = "https://github.com/";
-                    }
-                  ];
-                }
-              ];
+        (mkIf (config.alienix.home.firefox.enable && pkgs.stdenv.hostPlatform.isLinux) {
+            xdg.mimeApps = {
+                enable = true;
+                defaultApplications = {
+                    "text/html" = [ "firefox.desktop" ];
+                    "application/xhtml+xml" = [ "firefox.desktop" ];
+                    "application/x-www-browser" = [ "firefox.desktop" ];
+                    "x-scheme-handler/http" = [ "firefox.desktop" ];
+                    "x-scheme-handler/https" = [ "firefox.desktop" ];
+                    "x-scheme-handler/about" = [ "firefox.desktop" ];
+                    "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+                };
             };
-            extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
-              sponsorblock
-              bitwarden
-            ];
-          };
-        };
-      };
-      stylix.targets.librewolf.profileNames = [ "default" ];
-    })
-
-    (mkIf (config.alienix.home.firefox.enable && pkgs.stdenv.hostPlatform.isLinux) {
-      xdg.mimeApps = {
-        enable = true;
-        defaultApplications = {
-          "text/html" = [ "firefox.desktop" ];
-          "application/xhtml+xml" = [ "firefox.desktop" ];
-          "application/x-www-browser" = [ "firefox.desktop" ];
-          "x-scheme-handler/http" = [ "firefox.desktop" ];
-          "x-scheme-handler/https" = [ "firefox.desktop" ];
-          "x-scheme-handler/about" = [ "firefox.desktop" ];
-          "x-scheme-handler/unknown" = [ "firefox.desktop" ];
-        };
-      };
-    })
-  ];
+        })
+    ];
 }
