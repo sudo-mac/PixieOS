@@ -14,6 +14,7 @@
     ./vault-dashboard.nix
     ./blockboard.nix
     ./ebay-sync.nix
+    ./plaid-sync.nix
     ./vault-backup.nix
     ./audio.nix
     ./graphics.nix

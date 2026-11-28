@@ -21,6 +21,7 @@
     blockboard.enable = true; # Blockboard, my Blocks app (~/Projects/Blockboard): http://alienix:8094
     vault-backup.enable = true; # hourly copy of the 3 vaults to e-Garage/Backups/Vaults
     ebay-sync.enable = true; # hourly eBay numbers into LifeVault + OurVault (~/Projects/ebay-sync)
+    plaid-sync.enable = true; # daily bank/card transactions via Plaid into LifeVault + e-Garage (~/Projects/plaid-sync)
     ssd.enable = true;
 
     gaming = {
