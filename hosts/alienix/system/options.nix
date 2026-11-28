@@ -18,6 +18,7 @@
     vault-dashboard.enable = true; # Mashley's Dashboard (OurVault): http://alienix:8088
     lifevault-dashboard.enable = true; # LifeVault dashboard: http://alienix:8090
     ashley-dashboard.enable = true; # Ashley's dashboard (AshleyVault): http://alienix:8092
+    blockboard.enable = true; # Blockboard, my Blocks app (~/Projects/Blockboard): http://alienix:8094
     vault-backup.enable = true; # hourly copy of the 3 vaults to e-Garage/Backups/Vaults
     ebay-sync.enable = true; # hourly eBay numbers into LifeVault + OurVault (~/Projects/ebay-sync)
     ssd.enable = true;
