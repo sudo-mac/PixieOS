@@ -5,8 +5,11 @@
   lib,
   ...
 }:
-with lib; {
-  options = {alienix.system.graphics.nvidia.enable = mkEnableOption "Enable Nvidia Graphics Compatibility";};
+with lib;
+{
+  options = {
+    alienix.system.graphics.nvidia.enable = mkEnableOption "Enable Nvidia Graphics Compatibility";
+  };
 
   config = mkIf config.alienix.system.graphics.nvidia.enable {
     # System Configuration
@@ -58,6 +61,6 @@ with lib; {
     # Enable Nvidia Drivers. This is the one place the list is stated -- see
     # graphics.nix and gaming.nix, both of which used to add "radeon" and
     # "amdgpu" to it on a machine that has neither.
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
   };
 }

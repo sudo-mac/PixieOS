@@ -54,11 +54,26 @@ in
           margin-left = margin.left;
           margin-right = margin.right;
 
-          modules-left = [ "hyprland/workspaces" "hyprland/window" ];
+          modules-left = [
+            "hyprland/workspaces"
+            "hyprland/window"
+          ];
 
-          modules-center = [ "clock" "mpris" "custom/media-popup" ];
+          modules-center = [
+            "clock"
+            "mpris"
+            "custom/media-popup"
+          ];
 
-          modules-right = [ "cpu" "network" "bluetooth" "pulseaudio" "battery" "tray" "custom/power" ];
+          modules-right = [
+            "cpu"
+            "network"
+            "bluetooth"
+            "pulseaudio"
+            "battery"
+            "tray"
+            "custom/power"
+          ];
 
           # A music glyph, not an empty string. The format was "" -- the module
           # drew nothing at all while still taking its padding, so the control

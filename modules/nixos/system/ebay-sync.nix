@@ -4,8 +4,10 @@
   pkgs,
   ...
 }:
-with lib; {
-  options.alienix.system.ebay-sync.enable = mkEnableOption "Hourly eBay pull into LifeVault and OurVault";
+with lib;
+{
+  options.alienix.system.ebay-sync.enable =
+    mkEnableOption "Hourly eBay pull into LifeVault and OurVault";
 
   # Pulls SpooferDex's eBay numbers (orders, balance, payouts, listings, views)
   # with eBay's read-only seller APIs and rewrites one note in each vault:
@@ -15,10 +17,10 @@ with lib; {
   config = mkIf config.alienix.system.ebay-sync.enable {
     systemd.services.ebay-sync = {
       description = "Pull eBay numbers into the vaults";
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       environment.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
-      path = [pkgs.poppler-utils]; # pdftotext, for the wholesale invoice PDFs (phone costs)
+      path = [ pkgs.poppler-utils ]; # pdftotext, for the wholesale invoice PDFs (phone costs)
       serviceConfig = {
         Type = "oneshot";
         User = "dex";
@@ -40,7 +42,7 @@ with lib; {
     };
 
     systemd.timers.ebay-sync = {
-      wantedBy = ["timers.target"];
+      wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = "hourly";
         RandomizedDelaySec = "5min";

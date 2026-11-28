@@ -71,10 +71,7 @@ let
     let
       h = builtins.floor (byte * 100.0 / 255.0 + 0.5);
     in
-    if h >= 100 then
-      "1.0"
-    else
-      "0.${if h < 10 then "0${toString h}" else toString h}";
+    if h >= 100 then "1.0" else "0.${if h < 10 then "0${toString h}" else toString h}";
 
   # The @define-color preamble a GTK-CSS surface needs before it can name a
   # palette slot. stylix injects this for waybar, but wlogout and regreet get

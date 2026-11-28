@@ -21,7 +21,13 @@
       adapter = "ACAD";
 
       format = "{capacity}% {icon}";
-      format-icons = [ "" "" "" "" "" ];
+      format-icons = [
+        ""
+        ""
+        ""
+        ""
+        ""
+      ];
       max-length = 25;
 
       interval = 60;

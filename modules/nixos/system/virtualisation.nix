@@ -1,12 +1,13 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with lib; {
+with lib;
+{
   options = {
-    alienix.system.virtualisation.enable =
-      mkEnableOption "Enable Virtualisation module for virtual machines";
+    alienix.system.virtualisation.enable = mkEnableOption "Enable Virtualisation module for virtual machines";
   };
 
   config = mkIf config.alienix.system.virtualisation.enable {

@@ -60,37 +60,43 @@ in
           # size where any per-frame width jitter is very noticeable.
           # Note: hyprlock's Y offset grows *upward* from its baseline, so
           # "170" here means 170px above true center, not below.
-          ({
-            text = "<b>$TIME</b>";
-            position = "0, 170";
-            halign = "center";
-            valign = "center";
-            shadow_passes = 2;
-            shadow_size = 4;
-          }
-          // style.clock)
+          (
+            {
+              text = "<b>$TIME</b>";
+              position = "0, 170";
+              halign = "center";
+              valign = "center";
+              shadow_passes = 2;
+              shadow_size = 4;
+            }
+            // style.clock
+          )
 
           # Date. Smaller UI text uses the Propo (proportional) cut, matching
           # waybar/rofi/dunst elsewhere in this config, since kerning matters
           # more than fixed-width alignment at this size. Uppercased for a
           # sharper, more "designed" look under the big clock.
-          ({
-            text = ''cmd[update:43200000] date +'%A, %d %B' | tr '[:lower:]' '[:upper:]' '';
-            position = "0, 40";
-            halign = "center";
-            valign = "center";
-          }
-          // style.date)
+          (
+            {
+              text = "cmd[update:43200000] date +'%A, %d %B' | tr '[:lower:]' '[:upper:]' ";
+              position = "0, 40";
+              halign = "center";
+              valign = "center";
+            }
+            // style.date
+          )
 
           # Personalized greeting, sitting just above the password card
           # (bottom-anchored) rather than stacked with the clock/date above.
-          ({
-            text = "<i>Welcome back, dex</i>";
-            position = "0, 210";
-            halign = "center";
-            valign = "bottom";
-          }
-          // style.greeting)
+          (
+            {
+              text = "<i>Welcome back, dex</i>";
+              position = "0, 210";
+              halign = "center";
+              valign = "bottom";
+            }
+            // style.greeting
+          )
         ];
 
         input-field = {

@@ -4,8 +4,11 @@
   pkgs,
   ...
 }:
-with lib; {
-  options = {alienix.home.git.enable = mkEnableOption "Enables Git";};
+with lib;
+{
+  options = {
+    alienix.home.git.enable = mkEnableOption "Enables Git";
+  };
 
   config = mkIf config.alienix.home.git.enable {
     # Enable and Configure Git

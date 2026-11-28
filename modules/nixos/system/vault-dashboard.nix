@@ -4,7 +4,8 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   fontDir = "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype/NerdFonts/JetBrainsMono";
 
   # One web server per vault, all from one codebase (~/Projects/vault-dashboards,
@@ -13,32 +14,35 @@ with lib; let
   # answers home-network IPs. Each one can edit its own vault (tick, add, full
   # note editing, new/rename/move/archive/trash) and nothing else.
   code = "/home/dex/Projects/vault-dashboards/run.py";
-  mkDashboard = {
-    description,
-    site,
-    vault,
-    port,
-  }: {
-    inherit description;
-    wantedBy = ["multi-user.target"];
-    after = ["network.target"];
-    environment.PYTHONDONTWRITEBYTECODE = "1";
-    serviceConfig = {
-      User = "dex";
-      Group = "users";
-      ExecStart = "${pkgs.python3}/bin/python3 ${code} --site ${site} --vault ${vault} --port ${toString port} --font-dir ${fontDir}";
-      Restart = "always";
-      RestartSec = 5;
+  mkDashboard =
+    {
+      description,
+      site,
+      vault,
+      port,
+    }:
+    {
+      inherit description;
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      environment.PYTHONDONTWRITEBYTECODE = "1";
+      serviceConfig = {
+        User = "dex";
+        Group = "users";
+        ExecStart = "${pkgs.python3}/bin/python3 ${code} --site ${site} --vault ${vault} --port ${toString port} --font-dir ${fontDir}";
+        Restart = "always";
+        RestartSec = 5;
 
-      # Read-only everywhere, except its own vault.
-      ProtectSystem = "strict";
-      ProtectHome = "read-only";
-      ReadWritePaths = [vault];
-      PrivateTmp = true;
-      NoNewPrivileges = true;
+        # Read-only everywhere, except its own vault.
+        ProtectSystem = "strict";
+        ProtectHome = "read-only";
+        ReadWritePaths = [ vault ];
+        PrivateTmp = true;
+        NoNewPrivileges = true;
+      };
     };
-  };
-in {
+in
+{
   options = {
     alienix.system.vault-dashboard.enable = mkEnableOption "Enable Mashley's Dashboard (OurVault, port 8088)";
     alienix.system.lifevault-dashboard.enable = mkEnableOption "Enable the LifeVault dashboard (port 8090)";
@@ -60,7 +64,7 @@ in {
         vault = "/home/dex/OurVault";
         port = 8088;
       };
-      networking.firewall.allowedTCPPorts = [8088];
+      networking.firewall.allowedTCPPorts = [ 8088 ];
     })
 
     (mkIf config.alienix.system.lifevault-dashboard.enable {
@@ -70,7 +74,7 @@ in {
         vault = "/home/dex/LifeVault";
         port = 8090;
       };
-      networking.firewall.allowedTCPPorts = [8090];
+      networking.firewall.allowedTCPPorts = [ 8090 ];
     })
 
     (mkIf config.alienix.system.ashley-dashboard.enable {
@@ -80,7 +84,7 @@ in {
         vault = "/home/dex/AshleyVault";
         port = 8092;
       };
-      networking.firewall.allowedTCPPorts = [8092];
+      networking.firewall.allowedTCPPorts = [ 8092 ];
     })
   ];
 }

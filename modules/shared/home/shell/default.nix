@@ -3,7 +3,8 @@
   lib,
   ...
 }:
-with lib; {
+with lib;
+{
   options = {
     alienix.home.shell.enable = mkEnableOption "Enable and configure my terminal setup";
   };

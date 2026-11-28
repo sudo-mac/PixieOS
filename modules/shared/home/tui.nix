@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   # These three were declared at the system level, where stylix cannot reach
   # them -- its btop, yazi and tmux targets all write home-manager options, so
   # a NixOS-level `programs.btop.enable` left the target inert and the program

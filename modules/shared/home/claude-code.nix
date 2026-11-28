@@ -25,7 +25,8 @@ let
   managedJson = pkgs.writeText "claude-managed-settings.json" (builtins.toJSON managedSettings);
 in
 {
-  options.alienix.home.claude-code.enable = mkEnableOption "Declarative Claude Code settings and statusline";
+  options.alienix.home.claude-code.enable =
+    mkEnableOption "Declarative Claude Code settings and statusline";
 
   config = mkIf config.alienix.home.claude-code.enable {
     # settings.json is a real, writable file. On every switch the Nix-owned keys

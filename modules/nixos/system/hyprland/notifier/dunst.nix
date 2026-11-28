@@ -68,9 +68,18 @@ in
         }
         // style.global;
 
-        urgency_low = { timeout = 5; } // style.urgency_low;
-        urgency_normal = { timeout = 8; } // style.urgency_normal;
-        urgency_critical = { timeout = 0; } // style.urgency_critical;
+        urgency_low = {
+          timeout = 5;
+        }
+        // style.urgency_low;
+        urgency_normal = {
+          timeout = 8;
+        }
+        // style.urgency_normal;
+        urgency_critical = {
+          timeout = 0;
+        }
+        // style.urgency_critical;
       };
     };
   };

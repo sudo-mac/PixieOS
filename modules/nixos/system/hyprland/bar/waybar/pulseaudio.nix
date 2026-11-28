@@ -12,7 +12,10 @@
         phone-muted = "";
         portable = "";
         car = "";
-        default = [ "" "" ];
+        default = [
+          ""
+          ""
+        ];
       };
       scroll-step = 1;
       on-click = "pavucontrol";

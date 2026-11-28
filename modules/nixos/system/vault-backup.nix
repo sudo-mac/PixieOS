@@ -4,7 +4,8 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   # The three Obsidian vaults live on alienix; the e-Garage drive only holds backups.
   vaults = {
     LifeVault = "/home/dex/LifeVault"; # Matthew's own
@@ -23,7 +24,8 @@ with lib; let
       exit 0
     fi
     today=$(date +%F)
-    ${concatStringsSep "\n" (mapAttrsToList (name: src: ''
+    ${concatStringsSep "\n" (
+      mapAttrsToList (name: src: ''
         if [ -d "${src}" ]; then
           mkdir -p "${dest}/${name}/current"
           # Hourly mirror of the vault as it is now.
@@ -40,11 +42,13 @@ with lib; let
           fi
           find "${dest}/${name}" -maxdepth 1 -name '${name} *.tar.gz' -mtime +30 -delete
         fi
-      '')
-      vaults)}
+      '') vaults
+    )}
   '';
-in {
-  options.alienix.system.vault-backup.enable = mkEnableOption "Back up the three vaults to the e-Garage drive";
+in
+{
+  options.alienix.system.vault-backup.enable =
+    mkEnableOption "Back up the three vaults to the e-Garage drive";
 
   # Copies LifeVault, OurVault and AshleyVault to e-Garage/Backups/Vaults/<vault>/:
   #   current/                 an hourly mirror
@@ -53,8 +57,8 @@ in {
   config = mkIf config.alienix.system.vault-backup.enable {
     systemd.services.vault-backup = {
       description = "Back up the Obsidian vaults to the e-Garage drive";
-      after = ["mnt-e\\x2dGarage.mount"];
-      wantedBy = ["mnt-e\\x2dGarage.mount"]; # also run right after the drive is plugged in
+      after = [ "mnt-e\\x2dGarage.mount" ];
+      wantedBy = [ "mnt-e\\x2dGarage.mount" ]; # also run right after the drive is plugged in
       serviceConfig = {
         Type = "oneshot";
         User = "dex";
@@ -62,14 +66,14 @@ in {
         ExecStart = script;
         ProtectSystem = "strict";
         ProtectHome = "read-only";
-        ReadWritePaths = ["-/mnt/e-Garage"];
+        ReadWritePaths = [ "-/mnt/e-Garage" ];
         PrivateTmp = true;
         NoNewPrivileges = true;
       };
     };
 
     systemd.timers.vault-backup = {
-      wantedBy = ["timers.target"];
+      wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = "hourly";
         RandomizedDelaySec = "5min";

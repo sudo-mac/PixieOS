@@ -1,26 +1,26 @@
 { pkgs, ... }:
 {
-    imports = [
-        ../../themes
-        ./ssh.nix
-        ./stylix.nix
-        ./claude.nix
-    ];
+  imports = [
+    ../../themes
+    ./ssh.nix
+    ./stylix.nix
+    ./claude.nix
+  ];
 
-    nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
 
-    environment.systemPackages = with pkgs; [
-        nh
-        nix-output-monitor
-        bat
-        tree
-        weathr
-        lolcat
-        blender
-        openscad
-        fastfetch
-        onefetch
-        obsidian
-        android-studio
-    ];
+  environment.systemPackages = with pkgs; [
+    nh
+    nix-output-monitor
+    bat
+    tree
+    weathr
+    lolcat
+    blender
+    openscad
+    fastfetch
+    onefetch
+    obsidian
+    android-studio
+  ];
 }

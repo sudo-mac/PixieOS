@@ -3,8 +3,11 @@
   lib,
   ...
 }:
-with lib; {
-  options = {alienix.system.ssd.enable = mkEnableOption "Enable e-Garage SSD auto-mount";};
+with lib;
+{
+  options = {
+    alienix.system.ssd.enable = mkEnableOption "Enable e-Garage SSD auto-mount";
+  };
 
   config = mkIf config.alienix.system.ssd.enable {
     fileSystems."/mnt/e-Garage" = {

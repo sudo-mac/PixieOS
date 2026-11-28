@@ -5,16 +5,20 @@
   inputs,
   ...
 }:
-with lib; {
+with lib;
+{
   imports = [
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./server-mods.nix
   ];
 
-  options = {alienix.system.gaming.minecraft.servers.fabric-1_21_1.enable = mkEnableOption "Enable Minecraft Server";};
+  options = {
+    alienix.system.gaming.minecraft.servers.fabric-1_21_1.enable =
+      mkEnableOption "Enable Minecraft Server";
+  };
 
   config = mkIf config.alienix.system.gaming.minecraft.servers.fabric-1_21_1.enable {
-    nixpkgs.overlays = [inputs.nix-minecraft.overlay];
+    nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 
     environment.systemPackages = with pkgs; [
       minecraft-server
@@ -42,7 +46,7 @@ with lib; {
     };
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [25565];
+      allowedTCPPorts = [ 25565 ];
     };
   };
 }

@@ -3,8 +3,11 @@
   lib,
   ...
 }:
-with lib; {
-  options = { alienix.system.nextcloud.enable = mkEnableOption "Enable Nextcloud"; };
+with lib;
+{
+  options = {
+    alienix.system.nextcloud.enable = mkEnableOption "Enable Nextcloud";
+  };
 
   config = mkIf config.alienix.system.nextcloud.enable {
     services.nextcloud = {

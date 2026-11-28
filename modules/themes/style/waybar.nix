@@ -1,7 +1,12 @@
 # Presentation for the bar. Returns the GTK-CSS plus the few colour-bearing
 # settings fragments (cpu ramp, calendar spans) that waybar expresses as
 # Pango markup inside its config rather than as CSS.
-{ tokens, fonts, c, ... }:
+{
+  tokens,
+  fonts,
+  c,
+  ...
+}:
 let
   inherit (tokens)
     radius
@@ -203,18 +208,45 @@ in
   # wrong. Behind a click the ramp is being read deliberately, which is the one
   # context where sixteen columns earn their space.
   cpuFormatIcons =
-    map (
-      pair: "<span letter_spacing='1536' color='${c.hex (builtins.head pair)}'>${builtins.elemAt pair 1}</span>"
-    ) [
-      [ "base03" "▁" ]
-      [ "base04" "▂" ]
-      [ (c.slotOf "ok") "▃" ]
-      [ (c.slotOf "ok") "▄" ]
-      [ (c.slotOf "info") "▅" ]
-      [ (c.slotOf "warn") "▆" ]
-      [ (c.slotOf "secondary") "▇" ]
-      [ (c.slotOf "primary") "█" ]
-    ];
+    map
+      (
+        pair:
+        "<span letter_spacing='1536' color='${c.hex (builtins.head pair)}'>${builtins.elemAt pair 1}</span>"
+      )
+      [
+        [
+          "base03"
+          "▁"
+        ]
+        [
+          "base04"
+          "▂"
+        ]
+        [
+          (c.slotOf "ok")
+          "▃"
+        ]
+        [
+          (c.slotOf "ok")
+          "▄"
+        ]
+        [
+          (c.slotOf "info")
+          "▅"
+        ]
+        [
+          (c.slotOf "warn")
+          "▆"
+        ]
+        [
+          (c.slotOf "secondary")
+          "▇"
+        ]
+        [
+          (c.slotOf "primary")
+          "█"
+        ]
+      ];
 
   # The clock is the module the eye lands on first, so it is typeset rather than
   # printed: the digits carry the weight and the meridiem drops back to a small

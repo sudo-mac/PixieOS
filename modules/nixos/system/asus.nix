@@ -3,8 +3,11 @@
   lib,
   ...
 }:
-with lib; {
-  options = {alienix.system.asus.enable = mkEnableOption "Enable ASUS plugins";};
+with lib;
+{
+  options = {
+    alienix.system.asus.enable = mkEnableOption "Enable ASUS plugins";
+  };
 
   config = mkIf config.alienix.system.asus.enable {
     services = {
