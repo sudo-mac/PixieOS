@@ -65,6 +65,11 @@
       ...
     }@inputs:
     {
+      # `nix fmt` formats every .nix file here with the official nixfmt.
+      formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ] (
+        system: nixpkgs.legacyPackages.${system}.nixfmt-tree
+      );
+
       nixosConfigurations = {
         alienix = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

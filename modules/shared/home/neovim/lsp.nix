@@ -5,6 +5,21 @@
 }:
 {
   programs.nvf.settings.vim = {
+    # nvf passes nixfmt `--indent=<shiftwidth>`, and shiftwidth is 4 (see
+    # default.nix), which gave 4-space Nix files. Pass nothing, so nixfmt always
+    # uses the official 2-space style, the same as `nix fmt`.
+    formatter.conform-nvim.setupOpts.formatters.nixfmt.args = lib.mkForce [ ];
+
+    # Type Nix with 2 spaces too, so the code matches what the formatter writes.
+    autocmds = [
+      {
+        event = [ "FileType" ];
+        pattern = [ "nix" ];
+        command = "setlocal shiftwidth=2 tabstop=2 softtabstop=2";
+        desc = "Nix files: 2-space indent (official nixfmt style)";
+      }
+    ];
+
     lsp = {
       enable = true;
       presets.harper.enable = true;
@@ -29,6 +44,7 @@
         lsp.servers = [ "nixd" ];
         treesitter.enable = true;
         format.enable = true;
+        # nixfmt = the official Nix formatter (RFC 166 style, used in nixpkgs).
         format.type = [ "nixfmt" ];
       };
 
